@@ -18,7 +18,7 @@
     <?php
     if (isset($_SESSION['email'])) {
         echo "<br><h3>Bienvenido " . $_SESSION['email'] . "</h3>";
-    if ($_SESSION['admin']) {
+    if (isset($_SESSION['admin'])) {
         echo "<p>Su usuario es administrador</p>";
     }
     }
