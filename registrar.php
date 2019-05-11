@@ -25,9 +25,11 @@
         $_SESSION['email'] = $_POST['email'];
         header('location: home.php');
         exit();
+    } else {
+        include_once 'provincia.php';
+        $provincias = new Provincia;
+        $lista_provincias = $provincias->get_lista();
     }
-
-
     ?>
     <div class="container">
         <div class="row">
@@ -45,7 +47,11 @@
                     <div class="form-group">
                         <label for="provincia">Provincia</label>
                         <select class="form-control" id="provincia" name="provincia" tabindex="5" required>
-                            <option value="1">Buenos Aires</option>
+                            <?php
+                            foreach ($lista_provincias as $key => $value) {
+                                echo "<option value='$key'>$value</option>";
+                               }
+                            ?>
                         </select>
                     </div>
 
@@ -80,7 +86,6 @@
                 <div class="form-group">
                     <label for="localidad">Localidad</label>
                     <select class="form-control" id="localidad" name="localidad" tabindex="6" required>
-                        <option value="1">San Justo</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -135,6 +140,34 @@
             } else {
                 $('#alertPassword').hide()
             }
+        });
+
+        function ajaxGetLocalidades(provincia) {
+            $.ajax({
+                type: 'GET',
+                url: 'get_localidades.php',
+                data: {
+                    'provincia': provincia
+                },
+                dataType: 'json',
+                success: function (data) {
+                    $('#localidad').empty();
+                    data.forEach(function (localidad) {
+                        $('#localidad').append($('<option>', {
+                            value: localidad['id'],
+                            text: localidad['nombre']
+                        }));
+                    });
+                }
+            });
+        };
+
+        $('#provincia').change(function () {
+            ajaxGetLocalidades($(this).val());
+        });
+
+        $(document).ready(function () {
+            ajaxGetLocalidades($('#provincia').val());
         });
     </script>
 </body>
