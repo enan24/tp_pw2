@@ -35,6 +35,9 @@ class Usuario
         $password = $conexion->real_escape_string(md5($this->password));
         $sql = "INSERT INTO usuario (email, password) VALUES ('$email', '$password')";
         if(!$result = $conexion->query($sql)) {
+            if ($conexion->errno == 1062) {
+                return die("El correo ingresado ya se encuentra registrado");
+            }
             return die("Ha ocurrido un error al ejecutar la consulta");
         }
         $last_id = $conexion->insert_id;
@@ -50,7 +53,7 @@ class Usuario
         $sql = "INSERT INTO mas_info_usuario (usuario, nombre, apellido, documento, telefono, provincia, localidad, direccion, direccionNumero, direccionPiso)
                 VALUES ($last_id, '$nombre', '$apellido', $documento, $telefono, $provincia, '$localidad', '$direccion', $direccionNumero, '$direccionPiso');";
         if(!$result = $conexion->query($sql)) {
-            echo "Ha ocurrido un error al ejecutar la consulta";
+            return die("Ha ocurrido un error al ejecutar la consulta");
         }
 
     }

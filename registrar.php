@@ -32,14 +32,15 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-4">
-                <form action="registrar.php" method="POST">
+                <form action="registrar.php" method="POST" id="formRegistrar">
                     <div class="form-group">
                         <label for="nombre">Nombre</label>
                         <input type="text" class="form-control" id="nombre" name="nombre" tabindex="1" required>
                     </div>
                     <div class="form-group">
                         <label for="documento">Numero de documento</label>
-                        <input type="number" min="0" class="form-control" id="documento" name="documento" tabindex="3" required>
+                        <input type="number" min="0" class="form-control" id="documento" name="documento" tabindex="3"
+                            required>
                     </div>
                     <div class="form-group">
                         <label for="provincia">Provincia</label>
@@ -54,14 +55,15 @@
                     </div>
                     <div class="form-group">
                         <label for="password">Contrasena</label>
-                        <input type="password" class="form-control" id="password" name="password" tabindex="11" required>
+                        <input type="password" class="form-control" id="password" name="password" tabindex="11"
+                            required>
                     </div>
                     <div id="alertPassword" class="alert alert-danger" role="alert" style="display:none">
                         Las contrasenas no coinciden.
                     </div>
                     <div class="form-group">
-                        <label for="Checkpassword">Repita la contrasena</label>
-                        <input type="password" class="form-control" id="Checkpassword" tabindex="12" required>
+                        <label for="checkPassword">Repita la contrasena</label>
+                        <input type="password" class="form-control" id="checkPassword" tabindex="12" required>
                     </div>
                     <button type="submit" class="btn btn-primary" tabindex="13">Registrar</button>
             </div>
@@ -72,7 +74,8 @@
                 </div>
                 <div class="form-group">
                     <label for="telefono">Telefono</label>
-                    <input type="number" min="0" class="form-control" id="telefono" name="telefono" tabindex="4" required>
+                    <input type="number" min="0" class="form-control" id="telefono" name="telefono" tabindex="4"
+                        required>
                 </div>
                 <div class="form-group">
                     <label for="localidad">Localidad</label>
@@ -91,8 +94,8 @@
                                 name="direccionNumero" tabindex="9" required>
                         </div>
                         <div class="col-sm">
-                            <input type="text" id="pisoDireccion" class="form-control" tabindex="10" placeholder="Piso/Dpto"
-                                name="direccionPiso">
+                            <input type="text" id="pisoDireccion" class="form-control" tabindex="10"
+                                placeholder="Piso/Dpto" name="direccionPiso">
                         </div>
                     </div>
                 </div>
@@ -112,9 +115,21 @@
     ?>
 
     <script>
-        $('#Checkpassword').change(function () {
+        $('#formRegistrar').submit(function (e) {
             var password = $('#password').val();
-            var password2 = $('#Checkpassword').val();
+            var password2 = $('#checkPassword').val();
+            if (password != password2) {
+                e.preventDefault();
+                $('#alertPassword').show();
+            } else {
+                $('#alertPassword').hide()
+                e.submit();
+            }
+        });
+
+        $('#checkPassword').change(function () {
+            var password = $('#password').val();
+            var password2 = $('#checkPassword').val();
             if (password != password2) {
                 $('#alertPassword').show();
             } else {
