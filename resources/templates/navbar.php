@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #82E0FF;">
     <div class="col-sm-1">
   <a class="navbar-brand" href="home.php">
-    <img src="img/logo.png" width="32" height="35" class="d-inline-block align-top" alt="">
+    <img src="../resources/img/logo.png" width="32" height="35" class="d-inline-block align-top" alt="">
   </a>
 </div>
 <div class="col-sm-2">
@@ -43,15 +43,15 @@
       <a class="dropdown-item" href="#">Mis ventas</a>
       <a class="dropdown-item" href="#">Mis compras</a>
       <div class="dropdown-divider"></div>
-      <a class="dropdown-item" href="logout.php">Cerrar sesion</a>
+      <a class="dropdown-item" href="../controllers/logout.php">Cerrar sesion</a>
     </div>
   </li>';
   } else {
     echo '<li class="nav-item active">
-    <a class="nav-link" href="registrar.php">Registrarse</a>
+    <a class="nav-link" href="../views/registrar.php">Registrarse</a>
   </li>
   <li class="nav-item active">
-    <a class="nav-link" href="ingreso.php">Iniciar sesion</a>
+    <a class="nav-link" href="../views/ingresar.php">Iniciar sesion</a>
   </li>';
   }
   ?>

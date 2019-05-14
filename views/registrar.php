@@ -6,35 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <?php
-    include_once "css.html";
+    include_once "../resources/templates/css.html";
     ?>
     <title>Registrar</title>
 </head>
 
 <body>
     <?php
-    include_once "navbar.php";
+    include_once "../resources/templates/navbar.php";
     ?>
     <br>
-
-    <?php
-    if (!empty($_POST)) {
-        include_once 'usuario.php';
-        $usuario = new Usuario($_POST['email'], $_POST['password'], $_POST['nombre'], $_POST['apellido'], $_POST['documento'], $_POST['telefono'], $_POST['provincia'], $_POST['localidad'], $_POST['direccion'], $_POST['direccionNumero'], $_POST['direccionPiso']);
-        $usuario->guardar();
-        $_SESSION['email'] = $_POST['email'];
-        header('location: home.php');
-        exit();
-    } else {
-        include_once 'provincia.php';
-        $provincias = new Provincia;
-        $lista_provincias = $provincias->get_lista();
-    }
-    ?>
     <div class="container">
         <div class="row">
             <div class="col-sm-4">
-                <form action="registrar.php" method="POST" id="formRegistrar">
+                <form action="../controllers/registrar.php" method="POST" id="formRegistrar">
                     <div class="form-group">
                         <label for="nombre">Nombre</label>
                         <input type="text" class="form-control" id="nombre" name="nombre" tabindex="1" required>
@@ -48,6 +33,9 @@
                         <label for="provincia">Provincia</label>
                         <select class="form-control" id="provincia" name="provincia" tabindex="5" required>
                             <?php
+                            include_once '../models/provincia.php';
+                            $provincias = new Provincia;
+                            $lista_provincias = $provincias->get_lista();
                             foreach ($lista_provincias as $key => $value) {
                                 echo "<option value='$key'>$value</option>";
                                }
@@ -116,7 +104,7 @@
 
 
     <?php
-    include_once "javascript.html";
+    include_once "../resources/templates/javascript.html";
     ?>
 
     <script>
@@ -145,7 +133,7 @@
         function ajaxGetLocalidades(provincia) {
             $.ajax({
                 type: 'GET',
-                url: 'get_localidades.php',
+                url: '../controllers/get_localidades.php',
                 data: {
                     'provincia': provincia
                 },

@@ -28,7 +28,7 @@ class Usuario
     }
 
     public function guardar() {
-        include_once 'conexion.php';
+        include_once '../models/conexion.php';
         $conexion = new Conexion();
         $conexion = $conexion->conectar();
         $email = $conexion->real_escape_string($this->email);

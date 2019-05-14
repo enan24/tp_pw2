@@ -1,8 +1,8 @@
 <?php
 session_start();
-include_once "credencial.php";
-include_once "usuarioValido.php";
-include_once "usuarioInvalido.php";
+include_once "../models/credencial.php";
+include_once "../models/usuarioValido.php";
+include_once "../models/usuarioInvalido.php";
 
 class Login {
     public function loguearUsuario($credencial) {

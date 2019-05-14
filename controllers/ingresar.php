@@ -1,7 +1,7 @@
 <?php
 session_start();
-include_once "credencial.php";
-include_once "login.php";
+include_once "../models/credencial.php";
+include_once "../models/login.php";
 
 $email = $_POST["formEmail"];
 $pass = $_POST["formPassword"];

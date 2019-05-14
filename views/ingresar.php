@@ -7,9 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>e-Commerce</title>
     <?php
-    include_once "css.html";
+    include_once "../resources/templates/css.html";
     ?>
-    <link rel='stylesheet' href='CSS/login.css'>
+    <link rel='stylesheet' href='../resources/css/login.css'>
     <style>
         body,
         html {
@@ -24,7 +24,7 @@
             <div class='row'>
                 <div class='col-md-4 login-sec'>
                     <h2 class='text-center'>Iniciar Sesión</h2>
-                    <form action="ingresar.php" method="post" class="login-form">
+                    <form action="../controllers/ingresar.php" method="post" class="login-form">
                         <div class='form-group'>
                             <label for='formEmail' class='text-uppercase'>Correo electronico</label>
                             <input id='formEmail' type='email' name='formEmail' class='form-control'>
@@ -48,7 +48,7 @@
                     </form>
                 </div>
                 <div class='col-md-8 banner-sec'>
-                    <img class='d-block img-fluid' src='img/formula-de-la-ventas.png'
+                    <img class='d-block img-fluid' src='../resources/img/formula-de-la-ventas.png'
                         alt='ventas'>
                 </div>
             </div>
@@ -56,7 +56,7 @@
         </div>
     </section>
     <?php
-    include_once "javascript.html";
+    include_once "../resources/templates/javascript.html";
     ?>
 </body>
 

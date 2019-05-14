@@ -2,7 +2,7 @@
 class Provincia
 {
     public function get_lista() {
-        include_once 'conexion.php';
+        include_once '../models/conexion.php';
         $conexion = new Conexion();
         $conexion = $conexion->conectar();
         $lista_provincias = array();

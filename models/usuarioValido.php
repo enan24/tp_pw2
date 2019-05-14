@@ -1,10 +1,11 @@
 <?php
 session_start();
-class UsuarioInvalido
+class UsuarioValido
 {
     public function Redirigir(){
-        header('location: ingreso.php');
+        header('location: ../views/home.php');
         exit();
     }
 }
+
 ?>
