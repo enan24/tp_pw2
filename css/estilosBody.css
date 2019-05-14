@@ -1,0 +1,284 @@
+/*Imagenes Inicio*/
+        .sectionInicio{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            
+        }
+    .swiper-container {
+        width: 100%;
+        height: 100%;
+        margin: 0px auto;
+        
+        overflow: hidden;
+    }
+    @media(max-width:1230px){
+        .sectionInicio{
+            padding-top: 160px;
+        }
+            .swiper-container{
+                width: 100%;
+                height: 50%;
+            }
+        }
+    .swiper-slide{
+        text-align: center;
+        font-size: 18px;
+        background: #fff;
+    }
+        .swiper-slide0{
+        /*Center slide text vertically*/
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+        }
+        .swiper-container0 img{
+            width: 100%;
+        }
+        .cosoRojo{
+            background: #E42220;
+            height: 20px;
+        }
+        .swiper-pagination{
+            top: 85%;
+        }
+
+
+
+/*Mas Resiente///////////*/
+.subtitulo{
+    width: 100%;
+    padding-top: 70px;
+    padding-bottom: 30px;
+}
+.imgCinta{
+    width: 400px;
+    margin: auto;
+}
+.imgCinta img{
+    width: 100%;
+}
+.imgCinta p{
+    text-align: center;
+    position: absolute;
+    margin-top: -50px;
+    width: 400px;
+    font-size: 20px;
+    color: white;
+    font-family: arial;
+}
+#subTituloRecientes{
+    padding-top: 55%;
+}
+#subTituloPromociones{
+    padding-top: 80px;
+}
+
+.swiper-container1 {
+        width: 1200px;
+        height: 400px;
+    }
+        
+        .swiper-slide1{
+            
+            width: 240px;
+        }
+        .contenedorMasRecientes{
+            overflow: hidden;
+            
+            padding-bottom: inherit;
+            height: inherit;
+            height: 430px;
+        }
+        .cintaNuevo{
+            width: 100px;
+            top: 0;
+            position: absolute;
+            margin-top: 46.8px;
+            margin-right: 10px;
+            right: 0;
+            z-index: 1;
+        }
+
+
+
+
+
+
+/*Paralax/////*/
+.paralax{
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+}
+.paralax img{
+    margin-top: -50px;
+    width: 100%;
+}
+
+
+/*PROMOCIONES*/
+.contenedorPromociones{
+            overflow: hidden;
+            
+            padding-bottom: inherit;
+            height: inherit;
+            height: 430px;
+        }
+.swiper-container2 {
+        width: 1200px;
+        height: 400px;
+    }
+    .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background: #fff;
+        
+        /* Center slide text vertically */
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+    }
+        
+        
+    /*Cada Producto//////////*/
+        .swiper-slide .producto{
+            width: 260px;
+            height: 287px;
+            margin-right: 10px;
+            position: absolute;
+            overflow: hidden;
+        }
+        .swiper-slide div .contenedorImg{
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+            background: #ecebeb;
+        }
+        .contenedorImg img{
+            margin-top: 20px;
+            width: 100%;
+        }
+    /*Datos//*/
+       .cajaDatos{
+    background: white;
+    width: 100%;
+    position: absolute;
+    padding-top: 10px;
+    font-family: arial;
+}
+.cajaDatos h3{
+    margin-left: 10px;
+    text-align: left;
+    font-weight: lighter;
+}
+.cajaDatos h2{
+    float: right;
+    margin-right: 10px;
+}
+.cajaDatos a{
+    display: block;
+    background: #f7280f;
+    color: white;
+    font-size: 15pt;
+    font-family: arial;
+    margin-top: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+}
+.cajaDatos a:hover{
+    transition: 0.5s;
+    background: #a4261d;
+}
+.swiper-slide .producto:hover > .cajaDatos{
+    transition: 0.3s;
+    margin-top: -40px;
+}
+.swiper-slide .producto:hover{
+    
+}
+/*/////////////////*/
+        
+        
+        .swiper-button-prev, .swiper-button-next{
+            cursor: pointer;
+        }
+        
+        .swiper-slide1{
+            
+            width: 240px;
+        }
+        .contenedorNovedades{
+            overflow: hidden;
+        }
+        @media(max-width:800px){
+            .swiper-button-next{
+                right: 10px;
+            }    
+            .swiper-button-prev{
+                left: 10px;
+            }
+        }
+        @media(max-width:1140px){
+            .centroFlechas2{
+                display: none;
+            }
+            .swiper-button-next{
+                right: -15px;
+            }    
+            .swiper-button-prev{
+                left: -15px;
+            }
+        }
+        
+        .centroFlechas{
+            margin: auto;
+            max-width: 1300px;
+            z-index: 2000;
+        }
+        .centroFlechas img{
+            width: 50px;
+            margin-top: 180px;
+            cursor: pointer;
+        }
+        .atras{
+            float: left;
+        }
+        .adelante{
+            float: right;
+        }
+        .cintaDescuento{
+            width: 60px;
+            top: 0;
+            position: absolute;
+            margin-top: 46.8px;
+            margin-right: 10px;
+            right: 0;
+            z-index: 1;
+        }
+
+
+
+
+

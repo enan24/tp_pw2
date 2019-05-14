@@ -1,0 +1,18 @@
+.contenedorLista{
+    width: 800px;
+    height: 400px;
+    
+    margin: auto;
+    padding-top:150px;
+}
+
+table{
+    width: 800px;
+    height: 300px;
+    font-family: Arial;
+
+}
+
+table tr td{
+    padding-left: 15px;
+}
