@@ -1,0 +1,57 @@
+.card {
+  text-align: center;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  min-width: 10rem;
+}
+
+.car {
+  color: red;
+}
+.car:hover {
+  text-decoration: none;
+  color: red;
+}
+.car-card:hover {
+  border: 1px solid red;
+}
+
+.propiertes {
+  color: blue;
+}
+.propiertes:hover {
+  color: blue;
+  text-decoration: none;
+}
+.propiertes-card:hover {
+  border: 1px solid blue;
+}
+
+.services {
+  color: green;
+}
+.services:hover  {
+  color: green;
+  text-decoration: none;
+}
+.services-card:hover {
+  border: 1px solid green;
+}
+
+.products {
+  color: orange;
+}
+.products:hover {
+  color: orange;
+  text-decoration: none;
+}
+.products-card:hover {
+  border: 1px solid orange;
+}
+
+.inline-container {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}

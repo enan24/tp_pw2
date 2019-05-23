@@ -62,4 +62,13 @@ function searchCategories() {
   return $categories;
 }
 
+function getPathImage() {
+  $image_name=$_FILES['image']['name'];
+  $temp = explode(".", $image_name);
+  $newfilename = round(microtime(true)) . '.' . end($temp);
+  $imagepath="../resources/img/products/".$newfilename;
+  move_uploaded_file($_FILES["image"]["tmp_name"],$imagepath);
+  return $imagepath;
+}
+
 ?>
