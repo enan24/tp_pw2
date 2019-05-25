@@ -16,6 +16,7 @@
     include_once "../resources/templates/navbar.php";
     ?>
     <br>
+    <span id="location"></span>
     <div class="container">
         <div class="row">
             <div class="col-sm-4">
@@ -93,7 +94,6 @@
                     </div>
                 </div>
 
-
             </div>
 
             </form>
@@ -106,7 +106,7 @@
     <?php
     include_once "../resources/templates/javascript.html";
     ?>
-
+    <script src="../resources/js/geolocation.js"></script>
     <script>
         $('#formRegistrar').submit(function (e) {
             var password = $('#password').val();
