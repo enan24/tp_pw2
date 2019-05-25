@@ -12,8 +12,9 @@ class Usuario
     private $direccion;
     private $direccionNumero;
     private $direccionPiso;
+    private $foto;
 
-    public function __construct($email, $password, $nombre, $apellido, $cuit, $telefono, $provincia, $localidad, $direccion, $direccionNumero, $direccionPiso) {
+    public function __construct($email, $password, $nombre, $apellido, $cuit, $telefono, $provincia, $localidad, $direccion, $direccionNumero, $direccionPiso, $foto) {
         $this->email = $email;
         $this->password = $password;
         $this->nombre = $nombre;
@@ -25,6 +26,7 @@ class Usuario
         $this->direccion = $direccion;
         $this->direccionNumero = $direccionNumero;
         $this->direccionPiso = $direccionPiso;
+        $this->foto = $foto;
     }
 
     public function guardar() {
@@ -50,8 +52,9 @@ class Usuario
         $direccion = $conexion->real_escape_string($this->direccion);
         $direccionNumero = filter_var($this->direccionNumero, FILTER_SANITIZE_NUMBER_INT);
         $direccionPiso = $conexion->real_escape_string($this->direccionPiso);
-        $sql = "INSERT INTO mas_info_usuario (usuario, nombre, apellido, cuit, telefono, provincia, localidad, direccion, direccionNumero, direccionPiso)
-                VALUES ($last_id, '$nombre', '$apellido', $cuit, $telefono, $provincia, '$localidad', '$direccion', $direccionNumero, '$direccionPiso');";
+        $foto = $conexion->real_escape_string($this->foto);
+        $sql = "INSERT INTO mas_info_usuario (usuario, nombre, apellido, cuit, telefono, provincia, localidad, direccion, direccionNumero, direccionPiso, foto)
+                VALUES ($last_id, '$nombre', '$apellido', $cuit, $telefono, $provincia, '$localidad', '$direccion', $direccionNumero, '$direccionPiso', '$foto');";
         if(!$result = $conexion->query($sql)) {
             return die("Ha ocurrido un error al ejecutar la consulta");
         }
