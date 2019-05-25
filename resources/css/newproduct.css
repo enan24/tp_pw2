@@ -1,10 +1,32 @@
+.custom-file-input~.custom-file-label[data-browse]::after {
+  background-color: skyblue;
+  color: black;
+}
+form {
+  margin-bottom: 1rem;
+}
+.container-group {
+  display: flex;
+  justify-content: space-between;
+}
+.container-group .form-group {
+  flex: 0.5;
+}
+.form-group {
+  margin: 1rem;
+}
+textarea {
+  min-height: 200px;
+}
 .card {
   text-align: center;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  margin-top: 1rem;
   min-width: 10rem;
 }
-
+.card a {
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+}
 .car {
   color: red;
 }
@@ -50,8 +72,36 @@
 }
 
 .inline-container {
+  padding-top: 1rem;
+  max-width: 600px;
+}
+
+.message-error {
+  text-align: center;
+  color: red;
+}
+
+.subcategories {
   display: flex;
-  flex: 1;
   justify-content: space-between;
   flex-wrap: wrap;
+}
+
+.subcategories div {
+  width: 50%;
+}
+
+@media (max-width: 650px) {
+  .container-group {
+    display: block
+  }
+  textarea {
+    min-height: 100px;
+  }
+}
+
+@media (max-width: 400px) {
+  .subcategories div {
+    width: 100%;
+  }
 }

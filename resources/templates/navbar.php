@@ -18,7 +18,7 @@
       <li class="nav-item">
         <a class="nav-link" href="#">Link</a>
       </li>
-      
+
     </ul>
   </div>
 </div>
@@ -40,6 +40,7 @@
       Mi cuenta
     </a>
     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+      <a class="dropdown-item" href="profile.php">Mi perfil</a>
       <a class="dropdown-item" href="#">Mis ventas</a>
       <a class="dropdown-item" href="#">Mis compras</a>
       <div class="dropdown-divider"></div>
@@ -55,7 +56,7 @@
   </li>';
   }
   ?>
-    
+
 </ul>
 </div>
 </div>

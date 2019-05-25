@@ -1,36 +1,41 @@
 <?php
   require_once("../resources/utils.php");
   $parte = 'Categoria';
+  $message = '';
   isLogged();
-
+  if ($_POST) {
+    header('location: profile.php');
+  }
   require_once("../models/category.php");
   require_once("../models/product.php");
+
   $categories = [];
   $categoryProduct = isset($_GET['category']) ? $_GET['category'] : '';
-  if ($categoryProduct !== '') {
+  if ($categoryProduct === '') {
     $resultCategories = searchCategories();
+  } else {
+    $parte = "Datos";
+    $resultSubCategories = searchSubCategories($categoryProduct);
 
-    foreach ($resultCategories as $category) {
+    foreach ($resultSubCategories as $category) {
       $categories['' . $category['id'] . ''] = new Category($category);
     }
   }
 
   $productData = array();
+  $productData['idUser'] = isset($_SESSION['idUser']) ? $_SESSION['idUser'] : '';
+  $productData['title'] = isset($_POST['name']) ? $_POST['name'] : '';
+  $productData['description'] = isset($_POST['description']) ? $_POST['description'] : '';
+  $productData['subDescription'] = isset($_POST['subdescription']) ? $_POST['subdescription'] : '';
+  $productData['price'] = isset($_POST['price']) ? $_POST['price'] : 0;
   if ($_POST) {
-    $productData['idUser'] = isset($_SESSION['idUser']) ? $_SESSION['idUser'] : '';
-    $productData['title'] = isset($_POST['name']) ? $_POST['name'] : '';
+    $subcategoriesPost = isset($_POST['subcategory']) ? $_POST['subcategory']: [];
     $productData['image'] = getPathImage();
-    $productData['description'] = isset($_POST['description']) ? $_POST['description'] : '';
-    $productData['subDescription'] = isset($_POST['subdescription']) ? $_POST['subdescription'] : '';
-    $productData['price'] = isset($_POST['price']) ? $_POST['price'] : 0;
-    $productData['create_date'] = date("Y/m/d");
-
+    $productData['create_date'] = date("Y-m-d H:i:s");
     $product = new Product($productData);
-    if ($product->validateProduct()) {
-      $product->saveProduct();
-      exit;
-    } else {
-      echo "ERROR";
+    $message = $product->validateProduct($subcategoriesPost);
+    if ($message === '') {
+      $product->saveProduct($subcategoriesPost);
     }
   }
 

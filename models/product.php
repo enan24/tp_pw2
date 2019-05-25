@@ -26,38 +26,57 @@
       $this->conexion = new Conexion();
     }
 
-    public function validateProduct() {
+    public function validateProduct($subcategories) {
+      $message = '';
       if ($_SESSION['admin'] === 0 && !$this->idUser === $_SESSION['idUser']) {
-        return false;
+        $message = 'Ocurrio un error al procesar el producto.';
       }
-      if (strlen($this->title) < 3) {
-        return false;
+      if (strlen($this->title) === 0) {
+        $message = 'El título es requerido.';
+      } else {
+        if (strlen($this->title) < 3) {
+          $message = 'El titulo es demasiado corto.';
+        }
       }
-      if (strlen($this->description) < 5) {
-        return false;
+      if (strlen($this->description) === 0) {
+        $message = 'La descripción es requerida.';
+      } else {
+        if (strlen($this->description) < 5) {
+          $message = 'La descripcion es muy corta.';
+        }
       }
       if (strlen($this->image) < 10) {
-        return false;
+        $message = 'La imagen no es valida.';
       }
-      if ($this->price === 0) {
-        return false;
+      if ((int)$this->price === 0) {
+        $message = 'El precio es requerido.';
       }
-      return true;
+      if (sizeof($subcategories) === 0) {
+        $message = 'La categoria es requerida.';
+      }
+      return $message;
     }
 
-    public function saveProduct() {
+    public function saveProduct($subcategories) {
+      $price = (int)$this->price;
       $sql = "INSERT INTO product (idUser, title, image, description, subDescription, price, create_date)
-              VALUES ($this->idUser, '$this->title', '$this->image', '$this->description', '$this->subDescription', '$this->price', '$this->date');";
+              VALUES ($this->idUser, '$this->title', '$this->image', '$this->description', '$this->subDescription', '$price', '$this->date');";
       $result = $this->conexion->query($sql);
       if(!$result) {
           return die("Ha ocurrido un error al ejecutar la consulta");
       }
-      header('location: home.php');
-      exit;
-    }
-
-    public function removeProduct() {
-
+      $sql = 'SELECT id FROM product WHERE idUser = '.$this->idUser.' AND title = "'.$this->title.'" AND create_date = "'.$this->date.'";';
+      $result = $this->conexion->query($sql);
+      $idProduct = '';
+      foreach ($result as $category) {
+        $idProduct = $category['id'];
+      }
+      foreach ($subcategories as $subcategory) {
+        $sqlSubCategory = "INSERT INTO sub_category_product (idSubCategory, idProduct)
+                          VALUES ('$subcategory', '$idProduct');";
+        $this->conexion->query($sqlSubCategory);
+      }
+      return;
     }
 
     public function updateProduct() {

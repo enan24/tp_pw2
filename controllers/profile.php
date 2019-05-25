@@ -9,6 +9,9 @@
     header('location: index.php');
     exit;
   }
+  if (isset($_GET['remove']) && !is_null($_GET['remove'])) {
+    removeProduct($_GET['remove']);
+  }
 
   $resultProducts = searchProducts($user['idUser']);
   $products = [];

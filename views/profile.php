@@ -15,23 +15,9 @@
     <link rel="stylesheet" href="../resources/css/profile.css">
   </head>
   <body>
-    <nav>
-      <div class="img-profile">
-        <a href="#">
-          <img class="icon" src="../resources/img/profile.png" alt="img-profile">
-        </a>
-      </div>
-      <div class="content-navbar">
-        <ul>
-          <li>
-            <a href="home.php">Inicio</a>
-          </li>
-          <li>
-            <a href="#">Salir</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
+    <?php
+      include_once('../resources/templates/head.php');
+    ?>
 
     <ul class="nav nav-tabs" id="profileData" role="tablist">
       <li class="nav-item">
@@ -46,49 +32,35 @@
       <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="profile-data-tab">
         <br>
         <div class="container">
+          <a class="btn btn-primary" style="background-color: skyblue; border-color: skyblue; color: black; margin-bottom: 1rem;" href="new-product.php">Nuevo producto</a>
           <div class="row">
             <?php
               foreach($products as $product) {
 
                 echo "<div class='col-lg-4 col-md-6 mb-4'>
                   <div class='card h-100'>
-                    <a href='#'><img class='card-img-top' src='". $product->image ."' alt=''></a>
+                    <a><img class='card-img-top' src='". $product->image ."' alt=''></a>
                     <div class='card-body'>
                       <h4 class='card-title'>
-                        <a href='#'>". $product->title ."</a>
+                        <a>". $product->title ."</a>
                       </h4>
                       <h5>$". $product->price ."</h5>
                       <p class='card-text'>". $product->description ."</p>
-                      <p class='card-text'>". $product->subDescription ."</p>
                     </div>
                     <div class='card-footer'>
+                      <p class='card-text'>". $product->subDescription ."</p>
                       <small class='text-muted'>&#9733; &#9733; &#9733; &#9733; &#9734;</small>
                     </div>
                     <div class='card-footer btns'>
                       <div class='container-btns'>
-                        <a class='btn-product-footer' href=''>Modificar</a>
-                        <a class='btn-product-footer' href=''>Eliminar</a>
+                        <a class='btn-product-footer' href='new-product.php?update=".$product->id."'>Modificar</a>
+                        <a class='btn-product-footer' href='profile.php?remove=".$product->id."'>Eliminar</a>
                       </div>
                     </div>
                   </div>
                 </div>";
             }
             ?>
-            <div class='col-lg-4 col-md-6 mb-4'>
-              <div class='card h-100'>
-                <a href='#'><img class='card-img-top' src='". $product['image'] ."' alt=''></a>
-                <div class='card-body'>
-                  <h4 class='card-title'>
-                    <a href='#'>Titulo</a>
-                  </h4>
-                  <h5>Precio</h5>
-                  <p class='card-text'>Descripcion</p>
-                </div>
-                <div class='card-footer'>
-                  <small class='text-muted'>&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
