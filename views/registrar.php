@@ -26,8 +26,8 @@
                         <input type="text" class="form-control" id="nombre" name="nombre" tabindex="1" required>
                     </div>
                     <div class="form-group">
-                        <label for="documento">Numero de documento</label>
-                        <input type="number" min="0" class="form-control" id="documento" name="documento" tabindex="3"
+                        <label for="cuit">CUIL/CUIT</label>
+                        <input type="text" maxlength="11" pattern= "[0-9]" class="form-control" id="cuit" name="cuit"  tabindex="3"
                             required>
                     </div>
                     <div class="form-group">
@@ -108,6 +108,7 @@
     ?>
     <script src="../resources/js/geolocation.js"></script>
     <script>
+        $('#cuit').tooltip({'trigger':'focus', 'title': 'Solo números sin espacios ni guiones'});
         $('#formRegistrar').submit(function (e) {
             var password = $('#password').val();
             var password2 = $('#checkPassword').val();

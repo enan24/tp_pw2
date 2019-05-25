@@ -5,7 +5,7 @@ class Usuario
     private $password;
     private $nombre;
     private $apellido;
-    private $documento;
+    private $cuit;
     private $telefono;
     private $provincia;
     private $localidad;
@@ -13,12 +13,12 @@ class Usuario
     private $direccionNumero;
     private $direccionPiso;
 
-    public function __construct($email, $password, $nombre, $apellido, $documento, $telefono, $provincia, $localidad, $direccion, $direccionNumero, $direccionPiso) {
+    public function __construct($email, $password, $nombre, $apellido, $cuit, $telefono, $provincia, $localidad, $direccion, $direccionNumero, $direccionPiso) {
         $this->email = $email;
         $this->password = $password;
         $this->nombre = $nombre;
         $this->apellido = $apellido;
-        $this->documento = $documento;
+        $this->cuit = $cuit;
         $this->telefono = $telefono;
         $this->provincia = $provincia;
         $this->localidad = $localidad;
@@ -43,15 +43,15 @@ class Usuario
         $last_id = $conexion->insert_id;
         $nombre = $conexion->real_escape_string($this->nombre);
         $apellido = $conexion->real_escape_string($this->apellido);
-        $documento = filter_var($this->documento, FILTER_SANITIZE_NUMBER_INT);
+        $cuit = filter_var($this->cuit, FILTER_SANITIZE_NUMBER_INT);
         $telefono = filter_var($this->telefono, FILTER_SANITIZE_NUMBER_INT);
         $provincia = filter_var($this->provincia, FILTER_SANITIZE_NUMBER_INT);
         $localidad = filter_var($this->localidad, FILTER_SANITIZE_NUMBER_INT);
         $direccion = $conexion->real_escape_string($this->direccion);
         $direccionNumero = filter_var($this->direccionNumero, FILTER_SANITIZE_NUMBER_INT);
         $direccionPiso = $conexion->real_escape_string($this->direccionPiso);
-        $sql = "INSERT INTO mas_info_usuario (usuario, nombre, apellido, documento, telefono, provincia, localidad, direccion, direccionNumero, direccionPiso)
-                VALUES ($last_id, '$nombre', '$apellido', $documento, $telefono, $provincia, '$localidad', '$direccion', $direccionNumero, '$direccionPiso');";
+        $sql = "INSERT INTO mas_info_usuario (usuario, nombre, apellido, cuit, telefono, provincia, localidad, direccion, direccionNumero, direccionPiso)
+                VALUES ($last_id, '$nombre', '$apellido', $cuit, $telefono, $provincia, '$localidad', '$direccion', $direccionNumero, '$direccionPiso');";
         if(!$result = $conexion->query($sql)) {
             return die("Ha ocurrido un error al ejecutar la consulta");
         }
