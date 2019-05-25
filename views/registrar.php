@@ -16,18 +16,20 @@
     include_once "../resources/templates/navbar.php";
     ?>
     <br>
+    <span id="location"></span>
     <div class="container">
         <div class="row">
             <div class="col-sm-4">
-                <form action="../controllers/registrar.php" method="POST" id="formRegistrar">
+                <form action="../controllers/registrar.php" method="POST" id="formRegistrar"
+                    enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="nombre">Nombre</label>
                         <input type="text" class="form-control" id="nombre" name="nombre" tabindex="1" required>
                     </div>
                     <div class="form-group">
-                        <label for="documento">Numero de documento</label>
-                        <input type="number" min="0" class="form-control" id="documento" name="documento" tabindex="3"
-                            required>
+                        <label for="cuit">CUIL/CUIT</label>
+                        <input type="text" maxlength="11" pattern="\d*" class="form-control" id="cuit" name="cuit"
+                            tabindex="3" required>
                     </div>
                     <div class="form-group">
                         <label for="provincia">Provincia</label>
@@ -58,6 +60,13 @@
                     <div class="form-group">
                         <label for="checkPassword">Repita la contrasena</label>
                         <input type="password" class="form-control" id="checkPassword" tabindex="12" required>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" style="background-color: skyblue;" id="image"
+                                name="image" required>
+                            <label class="custom-file-label" for="image" data-browse="Buscar">Foto de usuario</label>
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-primary" tabindex="13">Registrar</button>
             </div>
@@ -93,7 +102,6 @@
                     </div>
                 </div>
 
-
             </div>
 
             </form>
@@ -106,8 +114,18 @@
     <?php
     include_once "../resources/templates/javascript.html";
     ?>
-
+    <script src="../resources/js/geolocation.js"></script>
     <script>
+        $('#cuit').tooltip({
+            'trigger': 'focus',
+            'title': 'Solo números sin espacios ni guiones'
+        });
+
+        $('.custom-file-input').on('change', function () {
+            let fileName = $(this).val().split('\\').pop();
+            $(this).next('.custom-file-label').addClass("selected").html(fileName);
+        });
+
         $('#formRegistrar').submit(function (e) {
             var password = $('#password').val();
             var password2 = $('#checkPassword').val();

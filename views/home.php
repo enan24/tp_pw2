@@ -21,7 +21,7 @@
     <?php
     include_once "../resources/templates/navbar.php";
     ?>
-
+    <span id="location"></span>
     <div class="container">
         <?php
     if (isset($_SESSION['email'])) {
@@ -308,7 +308,7 @@
     <script src="../resources/js/jQueryHome.js"></script>
     <script src="../resources/js/swiper.min.js"></script>
     <script src="../resources/js/promociones.js"></script>
-
+    <script src="../resources/js/geolocation.js"></script>
 
 
 </body>
