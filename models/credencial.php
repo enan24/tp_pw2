@@ -33,13 +33,14 @@ class Credencial {
                     } else {
                         $_SESSION['email'] = $row['email'];
                         $_SESSION['admin'] = $row['admin'];
+                        $_SESSION['idUser'] = $row['id'];
                         return true;
-                   }                
+                   }
                }
             }
             return null;
         }
-        
+
     }
 }
 
