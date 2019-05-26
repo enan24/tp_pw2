@@ -44,6 +44,15 @@ function searchProducts($idUser) {
   $products = [];
   foreach($result as $product) {
     $products["" . $product['id'] . ""] = $product;
+    $products["" . $product['id'] . ""]['categories'] = [];
+    $sql = "SELECT p.id AS idProduct, su.id AS idSubCategory, su.idCategory, su.name
+            FROM product AS p INNER JOIN sub_category_product AS s ON p.id = s.idProduct
+                INNER JOIN subcategory AS su ON s.idSubCategory = su.id
+            WHERE p.id = ".$product['id'].";";
+    $result = $GLOBALS['conexion']->query($sql);
+    foreach ($result as $category) {
+      $products["" . $product['id'] . ""]['categories']["".$category['idSubCategory'].""] = $category['name'];
+    }
   }
   return $products;
 }

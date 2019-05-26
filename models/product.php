@@ -12,10 +12,12 @@
     public $price;
     public $date;
     public $conexion;
+    public $categories;
 
     function __construct($product)
     {
       $this->id = isset($product['id']) ? $product['id'] : '';
+      $this->categories = isset($product['categories']) ? $product['categories'] : [];
       $this->idUser = $product['idUser'];
       $this->title = $product['title'];
       $this->image = $product['image'];

@@ -16,7 +16,7 @@
   </head>
   <body>
     <?php
-      include_once('../resources/templates/head.php');
+      include_once('../resources/templates/headProfile.php');
     ?>
 
     <ul class="nav nav-tabs" id="profileData" role="tablist">
@@ -28,7 +28,6 @@
       </li>
     </ul>
     <div class="tab-content" id="myTabContent">
-      <!-- Datos del usuario -->
       <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="profile-data-tab">
         <br>
         <div class="container">
@@ -36,7 +35,8 @@
           <div class="row">
             <?php
               foreach($products as $product) {
-
+                setlocale(LC_TIME, 'es_ES.UTF-8');
+                $date = ucfirst(strftime("%A, %d de %B de %Y", strtotime($product->date)));
                 echo "<div class='col-lg-4 col-md-6 mb-4'>
                   <div class='card h-100'>
                     <a><img class='card-img-top' src='". $product->image ."' alt=''></a>
@@ -45,12 +45,18 @@
                         <a>". $product->title ."</a>
                       </h4>
                       <h5>$". $product->price ."</h5>
-                      <p class='card-text'>". $product->description ."</p>
+                      <p class='card-text'>". $product->description."</p>
+                      <p class='date-product'>Creado: ".$date."</p>
                     </div>
                     <div class='card-footer'>
                       <p class='card-text'>". $product->subDescription ."</p>
                       <small class='text-muted'>&#9733; &#9733; &#9733; &#9733; &#9734;</small>
                     </div>
+                    <div class='card-footer category-product'>";
+                      foreach ($product->categories as $category) {
+                        echo "<a>".$category."</a>";
+                      }
+                echo "</div>
                     <div class='card-footer btns'>
                       <div class='container-btns'>
                         <a class='btn-product-footer' href='new-product.php?update=".$product->id."'>Modificar</a>

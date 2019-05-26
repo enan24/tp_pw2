@@ -17,7 +17,7 @@
   </head>
   <body>
     <?php
-      include_once('../resources/templates/head.php');
+      include_once('../resources/templates/headProfile.php');
     ?>
     <?php
       if ($categoryProduct === '') {
