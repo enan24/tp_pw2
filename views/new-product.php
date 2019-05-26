@@ -78,12 +78,7 @@
           </div>
           <div class="form-group subcategories">
               <?php
-                // print_r($productData);
                 foreach ($categories as $category) {
-                  // $checked = '';
-                  // if($category->id === $productData['idSubCategory']) {
-                  //   $checked = checked;
-                  // }
                   echo "<div class='custom-control custom-checkbox'>
                     <input type='checkbox' class='custom-control-input' id='".$category->id."' name='subcategory[".$category->id."]' value='".$category->id."'>
                     <label class='custom-control-label' for='".$category->id."'>".utf8_encode($category->name)."</label>
