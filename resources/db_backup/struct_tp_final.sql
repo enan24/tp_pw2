@@ -58,7 +58,7 @@ CREATE TABLE `category` (
   name varchar(255)
 );
 
-CREATE TABLE 'subcategory' (
+CREATE TABLE subcategory (
   id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name varchar(255) NOT NULL,
   idCategory int NOT NULL,
