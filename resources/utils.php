@@ -21,11 +21,13 @@ function searchUser($id) {
     die('Ocurrio un error al cargar los datos');
   }
   $sql = "SELECT user.id AS 'idUser', user.email, user.password, user.bloqueado, user.admin,
-                info.nombre, info.apellido, info.documento, info.telefono, info.provincia,
+                info.nombre, info.apellido, info.cuit, info.telefono, info.provincia,
                 info.localidad, info.direccion, info.direccionNumero, info.direccionPiso
           FROM usuario AS user INNER JOIN mas_info_usuario AS info ON user.id = info.usuario
           WHERE user.id = ". $id . ";";
-  $result = $GLOBALS['conexion']->query($sql);
+  if(!$result = $GLOBALS['conexion']->query($sql)) {
+    return die("Ha ocurrido un error al ejecutar la consulta");
+  }
   return $result->fetch_assoc();
 }
 
@@ -95,11 +97,11 @@ function searchSubCategories($categoryId) {
   }
 }
 
-function getPathImage() {
+function getPathImage($type) {
   $image_name=$_FILES['image']['name'];
   $temp = explode(".", $image_name);
   $newfilename = round(microtime(true)) . '.' . end($temp);
-  $imagepath="../resources/img/products/".$newfilename;
+  $imagepath="../resources/img/" . $type . "/" . $newfilename;
   move_uploaded_file($_FILES["image"]["tmp_name"],$imagepath);
   return $imagepath;
 }

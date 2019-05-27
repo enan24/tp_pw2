@@ -30,7 +30,7 @@
   $productData['price'] = isset($_POST['price']) ? $_POST['price'] : 0;
   if ($_POST) {
     $subcategoriesPost = isset($_POST['subcategory']) ? $_POST['subcategory']: [];
-    $productData['image'] = getPathImage();
+    $productData['image'] = getPathImage("products");
     $productData['create_date'] = date("Y-m-d H:i:s");
     $product = new Product($productData);
     $message = $product->validateProduct($subcategoriesPost);
