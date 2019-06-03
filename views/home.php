@@ -11,15 +11,6 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-
-
-    <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="css/shop-homepage.css" rel="stylesheet">
-
-
     <?php
     include_once "../resources/templates/css.html";
     ?>
@@ -30,8 +21,9 @@
     <?php
     include_once "../resources/templates/navbar.php";
     ?>
-    <span id="location"></span>
+   
     <div class="container">
+    <span id="location"></span>
         <?php
     if (isset($_SESSION['email'])) {
         echo "<br><h3>Bienvenido " . $_SESSION['email'] . "</h3>";
@@ -160,15 +152,6 @@
     </div>
     <!-- /.container -->
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-
-
-    <script src="../resources/js/jQueryHome.js"></script>
-
-    <script src="../resources/js/promociones.js"></script>
     <script src="../resources/js/geolocation.js"></script>
 
 

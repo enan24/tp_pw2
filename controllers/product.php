@@ -3,9 +3,7 @@
   $parte = 'Categoria';
   $message = '';
   isLogged();
-  if ($_POST) {
-    header('location: profile.php');
-  }
+
   require_once("../models/category.php");
   require_once("../models/product.php");
 
@@ -36,6 +34,8 @@
     $message = $product->validateProduct($subcategoriesPost);
     if ($message === '') {
       $product->saveProduct($subcategoriesPost);
+      header('location: profile.php');
+      exit();
     }
   }
 

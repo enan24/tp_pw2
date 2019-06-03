@@ -31,7 +31,7 @@
       <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="profile-data-tab">
         <br>
         <div class="container">
-          <a class="btn btn-primary" style="background-color: skyblue; border-color: skyblue; color: black; margin-bottom: 1rem;" href="new-product.php">Nuevo producto</a>
+          <a class="btn btn-primary" href="new-product.php">Nuevo producto</a><br><br>
           <div class="row">
             <?php
               foreach($products as $product) {
@@ -71,7 +71,7 @@
         </div>
       </div>
       <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-        Aqui van tus datos viteh, pero aun no estan viteh
+            Sin datos...
       </div>
     </div>
     <br>

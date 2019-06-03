@@ -16,7 +16,7 @@
     include_once "../resources/templates/navbar.php";
     ?>
     <br>
-    <span id="location"></span>
+    <span id="location"></span><br><br>
     <div class="container">
         <div class="row">
             <div class="col-sm-4">

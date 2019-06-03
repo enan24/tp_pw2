@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="../resources/css/estilosHead.css">
-<nav>
+<nav style="background-color: #82E0FF;">
   <div class="img-profile">
     <a href="#">
       <img class="icon" src="../resources/img/profile.png" alt="img-profile">
@@ -11,7 +11,7 @@
         <a href="home.php">Inicio</a>
       </li>
       <li>
-        <a href="#">Salir</a>
+        <a href="../controllers/logout.php">Salir</a>
       </li>
     </ul>
   </div>
