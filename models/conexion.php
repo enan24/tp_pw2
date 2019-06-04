@@ -1,37 +1,22 @@
 <?php
-class Conexion {
 
-    public $conexion;
+class Conexion
+{
 
-    public function __construct() {
-        $host = "localhost";
-        $usuario = "root";
-        $password = "";
-        $bd = "tp_final";
+    public function conectar()
+    {
+        $config = parse_ini_file("../resources/config.ini", true);
 
-        $conexion = new mysqli($host,$usuario,$password,$bd);
+        $host = $config['connection']['host'];
+        $usuario = $config['connection']['user'];
+        $password = $config['connection']['password'];
+        $bd = $config['connection']['database'];
+        $port = $config['connection']['port'];
+
+        $conexion = new mysqli($host, $usuario, $password, $bd, $port);
         if ($conexion->connect_error) {
-           return die("Ha tenido un error de conexion");
-        }
-        $this->conexion = $conexion;
-    }
-
-    public function conectar() {
-        $host = "localhost";
-        $usuario = "root";
-        $password = "";
-        $bd = "tp_final";
-
-        $conexion = new mysqli($host,$usuario,$password,$bd);
-        if ($conexion->connect_error) {
-           return die("Ha tenido un error de conexion");
+            return die("Ha tenido un error de conexion");
         }
         return $conexion;
     }
-
-    public function query($query) {
-        return $this->conexion->query($query);
-    }
 }
-
-?>

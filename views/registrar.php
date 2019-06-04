@@ -6,15 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <?php
-    include_once "../resources/templates/css.html";
-    ?>
+include_once "../resources/templates/css.html";
+?>
     <title>Registrar</title>
 </head>
 
 <body>
     <?php
-    include_once "../resources/templates/navbar.php";
-    ?>
+include_once "../resources/templates/navbar.php";
+?>
     <br>
     <span id="location"></span><br><br>
     <div class="container">
@@ -35,13 +35,13 @@
                         <label for="provincia">Provincia</label>
                         <select class="form-control" id="provincia" name="provincia" tabindex="5" required>
                             <?php
-                            include_once '../models/provincia.php';
-                            $provincias = new Provincia;
-                            $lista_provincias = $provincias->get_lista();
-                            foreach ($lista_provincias as $key => $value) {
-                                echo "<option value='$key'>$value</option>";
-                               }
-                            ?>
+include_once '../models/provincia.php';
+$provincias = new Provincia;
+$lista_provincias = $provincias->get_lista();
+foreach ($lista_provincias as $key => $value) {
+    echo "<option value='$key'>$value</option>";
+}
+?>
                         </select>
                     </div>
 
@@ -112,8 +112,8 @@
 
 
     <?php
-    include_once "../resources/templates/javascript.html";
-    ?>
+include_once "../resources/templates/javascript.html";
+?>
     <script src="../resources/js/geolocation.js"></script>
     <script>
         $('#cuit').tooltip({
