@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 25, 2019 at 07:25 PM
+-- Generation Time: Jun 04, 2019 at 11:16 PM
 -- Server version: 10.1.40-MariaDB
 -- PHP Version: 7.3.5
 
@@ -21,6 +21,30 @@ SET time_zone = "+00:00";
 --
 -- Database: `tp_final`
 --
+CREATE DATABASE IF NOT EXISTS `tp_final` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `tp_final`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `category`
+--
+
+DROP TABLE IF EXISTS `category`;
+CREATE TABLE `category` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`id`, `name`) VALUES
+(1, 'Vehiculos'),
+(2, 'Inmuebles'),
+(3, 'Servicios'),
+(4, 'Productos y Otros');
 
 -- --------------------------------------------------------
 
@@ -28,6 +52,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `localidad`
 --
 
+DROP TABLE IF EXISTS `localidad`;
 CREATE TABLE `localidad` (
   `id` int(11) NOT NULL,
   `nombre` varchar(255) NOT NULL,
@@ -4190,6 +4215,7 @@ INSERT INTO `localidad` (`id`, `nombre`, `provincia`) VALUES
 -- Table structure for table `mas_info_usuario`
 --
 
+DROP TABLE IF EXISTS `mas_info_usuario`;
 CREATE TABLE `mas_info_usuario` (
   `id` int(11) NOT NULL,
   `usuario` int(11) NOT NULL,
@@ -4210,8 +4236,37 @@ CREATE TABLE `mas_info_usuario` (
 --
 
 INSERT INTO `mas_info_usuario` (`id`, `usuario`, `nombre`, `apellido`, `cuit`, `telefono`, `provincia`, `localidad`, `direccion`, `direccionNumero`, `direccionPiso`, `foto`) VALUES
-(4, 19, 'Florencia', 'Maestripieri', 37752760, 23133123213, 2, 4117, 'Cervantes', 457, '', ''),
 (20, 35, 'Lucas', 'Miliauskas', 20379909826, 1153859733, 6, 833, 'Juncal 1453 B', 23123, '', '../resources/img/users/1558804571.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product`
+--
+
+DROP TABLE IF EXISTS `product`;
+CREATE TABLE `product` (
+  `id` int(11) NOT NULL,
+  `idUser` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `subDescription` varchar(255) DEFAULT NULL,
+  `price` varchar(20) NOT NULL,
+  `create_date` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_image`
+--
+
+DROP TABLE IF EXISTS `product_image`;
+CREATE TABLE `product_image` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `image` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -4219,6 +4274,7 @@ INSERT INTO `mas_info_usuario` (`id`, `usuario`, `nombre`, `apellido`, `cuit`, `
 -- Table structure for table `provincia`
 --
 
+DROP TABLE IF EXISTS `provincia`;
 CREATE TABLE `provincia` (
   `id` int(11) NOT NULL,
   `nombre` varchar(255) NOT NULL
@@ -4257,9 +4313,110 @@ INSERT INTO `provincia` (`id`, `nombre`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `subcategory`
+--
+
+DROP TABLE IF EXISTS `subcategory`;
+CREATE TABLE `subcategory` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `idCategory` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `subcategory`
+--
+
+INSERT INTO `subcategory` (`id`, `name`, `idCategory`) VALUES
+(1, 'Autos Chocados y Averiados', 1),
+(2, 'Autos de Colección', 1),
+(3, 'Autos y Camionetas', 1),
+(4, 'Camiones', 1),
+(5, 'Colectivos', 1),
+(6, 'Maquinaria Agricola', 1),
+(7, 'Motorhomes', 1),
+(8, 'Motos', 1),
+(9, 'Náutica', 1),
+(10, 'Semirremolques', 1),
+(11, 'Bicicletas', 1),
+(12, 'Otros vehiculos', 1),
+(13, 'Campos', 2),
+(14, 'Casas', 2),
+(15, 'Cocheras', 2),
+(16, 'Consultorios', 2),
+(17, 'Departamentos', 2),
+(18, 'Depósitos y Galpones', 2),
+(19, 'Fondo de Comercio', 2),
+(20, 'Locales', 2),
+(21, 'Oficinas', 2),
+(22, 'Parcelas, Nichos y Bóvedas', 2),
+(23, 'Quintas', 2),
+(24, 'Terrenos y Lotes', 2),
+(25, 'Otros Inmuebles', 2),
+(26, 'Asesoramiento Contable y Legal', 3),
+(27, 'Belleza y Cuidado Personal', 3),
+(28, 'Comunicación y Diseño', 3),
+(29, 'Cursos y Clases', 3),
+(30, 'Delivery', 3),
+(31, 'Fiestas y Eventos', 3),
+(32, 'Fotografia, Música y Cine', 3),
+(33, 'Hogar y Construcción', 3),
+(34, 'Imprenta', 3),
+(35, 'Mantenimiento de Vehiculos', 3),
+(36, 'Medicina y Salud', 3),
+(37, 'Ropa y Moda', 3),
+(38, 'Servicios para Mascotas', 3),
+(39, 'Servicios para Oficinas', 3),
+(40, 'Tecnologia', 3),
+(41, 'Transporte', 3),
+(42, 'Otros servicios', 3),
+(43, 'Colegio', 4),
+(44, 'Oficinas', 4),
+(45, 'Hospital', 4),
+(46, 'Hogar', 4),
+(47, 'Mochilas', 4),
+(48, 'Telefonos', 4),
+(49, 'Tecnologia', 4),
+(50, 'Computadoras', 4),
+(51, 'Notebook', 4),
+(52, 'Celulares', 4),
+(53, 'Teclados', 4),
+(54, 'Parlantes', 4),
+(55, 'Bebidas', 4),
+(56, 'Monitores', 4),
+(57, 'Mouses', 4),
+(58, 'Lamparas', 4),
+(59, 'Veladores', 4),
+(60, 'Telas', 4),
+(61, 'Camisas', 4),
+(62, 'Pantalones', 4),
+(63, 'Shorts', 4),
+(64, 'Remeras', 4),
+(65, 'Musculosas', 4),
+(66, 'Relojes', 4),
+(67, 'Arte', 4),
+(68, 'TV', 4),
+(69, 'Otros', 4);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sub_category_product`
+--
+
+DROP TABLE IF EXISTS `sub_category_product`;
+CREATE TABLE `sub_category_product` (
+  `idSubCategory` int(11) NOT NULL,
+  `idProduct` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `usuario`
 --
 
+DROP TABLE IF EXISTS `usuario`;
 CREATE TABLE `usuario` (
   `id` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
@@ -4273,12 +4430,17 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id`, `email`, `password`, `bloqueado`, `admin`) VALUES
-(19, 'fmaestri1@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 0, 0),
 (35, 'miliauskaslm@gmail.com', '202cb962ac59075b964b07152d234b70', 0, 0);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `category`
+--
+ALTER TABLE `category`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `localidad`
@@ -4297,10 +4459,38 @@ ALTER TABLE `mas_info_usuario`
   ADD KEY `localidad_fk` (`localidad`);
 
 --
+-- Indexes for table `product`
+--
+ALTER TABLE `product`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_product_user` (`idUser`);
+
+--
+-- Indexes for table `product_image`
+--
+ALTER TABLE `product_image`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `product_fk` (`product_id`);
+
+--
 -- Indexes for table `provincia`
 --
 ALTER TABLE `provincia`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `subcategory`
+--
+ALTER TABLE `subcategory`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_category_id` (`idCategory`);
+
+--
+-- Indexes for table `sub_category_product`
+--
+ALTER TABLE `sub_category_product`
+  ADD PRIMARY KEY (`idSubCategory`,`idProduct`),
+  ADD KEY `id_product_fk` (`idProduct`);
 
 --
 -- Indexes for table `usuario`
@@ -4314,6 +4504,12 @@ ALTER TABLE `usuario`
 --
 
 --
+-- AUTO_INCREMENT for table `category`
+--
+ALTER TABLE `category`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `localidad`
 --
 ALTER TABLE `localidad`
@@ -4323,7 +4519,19 @@ ALTER TABLE `localidad`
 -- AUTO_INCREMENT for table `mas_info_usuario`
 --
 ALTER TABLE `mas_info_usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT for table `product`
+--
+ALTER TABLE `product`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT for table `product_image`
+--
+ALTER TABLE `product_image`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `provincia`
@@ -4332,10 +4540,16 @@ ALTER TABLE `provincia`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
 
 --
+-- AUTO_INCREMENT for table `subcategory`
+--
+ALTER TABLE `subcategory`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+
+--
 -- AUTO_INCREMENT for table `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- Constraints for dumped tables
@@ -4353,7 +4567,32 @@ ALTER TABLE `localidad`
 ALTER TABLE `mas_info_usuario`
   ADD CONSTRAINT `localidad_fk` FOREIGN KEY (`localidad`) REFERENCES `localidad` (`id`),
   ADD CONSTRAINT `provincia_user_fk` FOREIGN KEY (`provincia`) REFERENCES `provincia` (`id`),
-  ADD CONSTRAINT `usuario_fk` FOREIGN KEY (`usuario`) REFERENCES `usuario` (`id`);
+  ADD CONSTRAINT `usuario_fk` FOREIGN KEY (`usuario`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `product`
+--
+ALTER TABLE `product`
+  ADD CONSTRAINT `fk_product_user` FOREIGN KEY (`idUser`) REFERENCES `usuario` (`id`);
+
+--
+-- Constraints for table `product_image`
+--
+ALTER TABLE `product_image`
+  ADD CONSTRAINT `product_fk` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `subcategory`
+--
+ALTER TABLE `subcategory`
+  ADD CONSTRAINT `fk_category_id` FOREIGN KEY (`idCategory`) REFERENCES `category` (`id`);
+
+--
+-- Constraints for table `sub_category_product`
+--
+ALTER TABLE `sub_category_product`
+  ADD CONSTRAINT `fk_sub_category_id` FOREIGN KEY (`idSubCategory`) REFERENCES `subcategory` (`id`),
+  ADD CONSTRAINT `id_product_fk` FOREIGN KEY (`idProduct`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
