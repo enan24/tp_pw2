@@ -39,7 +39,7 @@
                     $subCategories = rtrim($subCategories, " - ");
 
                     // INICIO carousel
-                    echo '<div class="col-lg-4 col-md-6 mb-4"><div class="card h-100"><a href="#">
+                    echo '<div class="col-lg-4 col-md-6 mb-4"><div class="card h-100"><a href="../views/product.php?id=' . $producto->id .'">
                             <div id="carouselProduct' . $producto->id . '" class="carousel slide" data-ride="carousel" data-interval="false"><ol class="carousel-indicators">';
                     for ($i=0; $i < sizeof($producto->images); $i++) {
                         if ($i == 0) {
@@ -69,7 +69,7 @@
 
                     echo '<div class="card-body">
                             <h4 class="card-title">
-                                <a href="#">' . $producto->title .'</a>
+                                <a href="../views/product.php?id=' . $producto->id .'">' . $producto->title .'</a>
                             </h4>
                             <h5>$' . $producto->price . '</h5>
                             <p class="card-text"><strong>Categoria:</strong> ' . $category . '<br><strong>Subcategorias:</strong> ' . $subCategories . '<br><small>' . $producto->description . '</small></p>

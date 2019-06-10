@@ -36,7 +36,7 @@
             <div class="card-header" id="headingOne">
               <h2 class="mb-0">
                 <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                  Categorias
+                  Más sobre:
                 </button>
               </h2>
             </div>
@@ -59,7 +59,7 @@
       </div>
 
       <div class="col-lg-3" id="categories-list">
-        <h4 class="my-4">Categorias</h4>
+        <h4 class="my-4">Más sobre:</h4>
         <div class="list-group">
           <?php
             foreach ($product['categories'] as $category) {

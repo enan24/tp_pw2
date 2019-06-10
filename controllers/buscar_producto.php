@@ -9,7 +9,6 @@ $sql = "SELECT p.id, u.email, p.title, p.description, p.subDescription, p.price,
         FROM product AS p
         INNER JOIN usuario AS u ON p.idUser = u.id
         WHERE p.title LIKE '%$keyword%' OR p.description LIKE '%$keyword%' OR p.subDescription LIKE '%$keyword%';";
-print_r($sql);
 if (!$result = $conexion->query($sql)) {
     return die("Ha ocurrido un error al ejecutar la consulta");
 }
