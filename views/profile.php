@@ -54,7 +54,7 @@ foreach ($products as $product) {
                     </div>
                     <div class='card-footer category-product'>";
     foreach ($product->categories as $category) {
-        echo "<a>" . $category . "</a>";
+        echo "<a>" . utf8_encode($category) . "</a>";
     }
     echo "</div>
                     <div class='card-footer btns'>

@@ -32,7 +32,9 @@
   <div class="d-flex justify-content-end" style="padding-right:50px;">
 <ul class="navbar-nav">
   <?php
-  session_start();
+  if (!isset($_SESSION)) {
+    session_start();
+  }
   if (isset($_SESSION['email'])) {
     echo '<li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"

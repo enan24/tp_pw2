@@ -1,5 +1,5 @@
 <?php
-include_once "../controllers/product.php";
+include_once "../controllers/new-product.php";
 header('Content-type: text/html; charset=UTF-8');
 ?>
 <!DOCTYPE html>
@@ -11,9 +11,9 @@ header('Content-type: text/html; charset=UTF-8');
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Nuevo Producto - <?php echo $parte ?></title>
   <?php
-include_once "../resources/templates/css.html";
-include_once "../resources/templates/javascript.html";
-?>
+    include_once "../resources/templates/css.html";
+    include_once "../resources/templates/javascript.html";
+  ?>
   <link rel="stylesheet" href="../resources/css/newproduct.css">
 </head>
 

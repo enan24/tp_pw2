@@ -58,6 +58,9 @@ class Usuario
         if(!$result = $conexion->query($sql)) {
             return die("Ha ocurrido un error al ejecutar la consulta");
         }
+        $_SESSION['idUser'] = $last_id;
+        $_SESSION['admin'] = 0;
+        $_SESSION['isLogged'] = true;
 
     }
 }

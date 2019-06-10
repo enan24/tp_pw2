@@ -6,16 +6,14 @@ require_once '../models/conexion.php';
 $GLOBALS['conexion'] = new Conexion();
 $GLOBALS['conexion'] = $GLOBALS['conexion']->conectar();
 
-function isLogged()
-{
+function isLogged() {
     if (!isset($_SESSION["isLogged"])) {
         header("location: index.php");
         exit;
     }
 }
 
-function searchUser($id)
-{
+function searchUser($id) {
     if (!isset($id) || is_null($id)) {
         header('location: index.php');
         exit;
@@ -31,8 +29,7 @@ function searchUser($id)
     return $result->fetch_assoc();
 }
 
-function searchProducts($idUser)
-{
+function searchProducts($idUser) {
     if (!isset($idUser) || is_null($idUser)) {
         header('location: index.php');
         exit;
@@ -70,21 +67,35 @@ function searchProducts($idUser)
     return $products;
 }
 
-function searchProduct($idProduct)
-{
-    $sql = "SELECT p.id AS id, p.*, su.id AS idSubCategory, su.idCategory, su.name
+function searchProduct($idProduct) {
+    $sql = "SELECT * FROM product WHERE id = ". $idProduct .";";
+    if (!$result = $GLOBALS['conexion']->query($sql)) {
+        return die("Ha ocurrido un error al ejecutar la consulta");
+    }
+    $product = mysqli_fetch_assoc($result);
+    $sql = "SELECT p.id, su.id AS idSubCategory, su.idCategory, su.name
           FROM product AS p INNER JOIN sub_category_product AS s ON p.id = s.idProduct
               INNER JOIN subcategory AS su ON s.idSubCategory = su.id
           WHERE p.id = " . $idProduct . ";";
     if (!$result = $GLOBALS['conexion']->query($sql)) {
         return die("Ha ocurrido un error al ejecutar la consulta");
     }
-    $row = mysqli_fetch_assoc($result);
-    return $row;
+    $product['categories'] = [];
+    foreach ($result as $category) {
+        $product['categories']["" . $category['idSubCategory'] . ""] = $category['name'];
+    }
+    return $product;
 }
 
-function searchCategories()
-{
+function searchImagesProduct($idProduct) {
+  $sql = "SELECT * FROM product_image WHERE product_id = " . $idProduct . ";";
+  if (!$result = $GLOBALS['conexion']->query($sql)) {
+      return die("Ha ocurrido un error al ejecutar la consulta");
+  }
+  return $result;
+}
+
+function searchCategories() {
     $sql = "SELECT * FROM category;";
     if (!$result = $GLOBALS['conexion']->query($sql)) {
         return die("Ha ocurrido un error al ejecutar la consulta");
@@ -96,8 +107,7 @@ function searchCategories()
     return $categories;
 }
 
-function searchSubCategories($categoryId)
-{
+function searchSubCategories($categoryId) {
     if (isset($categoryId) && !is_null($categoryId)) {
         $sql = "SELECT * FROM subcategory WHERE idCategory = " . $categoryId . ";";
         if (!$result = $GLOBALS['conexion']->query($sql)) {
@@ -112,8 +122,7 @@ function searchSubCategories($categoryId)
     }
 }
 
-function getPathImage($type)
-{
+function getPathImage($type) {
     $config = parse_ini_file("../resources/config.ini", true);
     if ($type == "products") {
         $image_list = array();
@@ -141,8 +150,7 @@ function getPathImage($type)
 
 }
 
-function removeProduct($idProduct)
-{
+function removeProduct($idProduct) {
     $sql = "SELECT image
         FROM product_image
         WHERE product_id = " . $idProduct . ";";
