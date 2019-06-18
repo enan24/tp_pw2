@@ -105,6 +105,11 @@
             <p class="card-text"><?php echo $product['subDescription']; ?></p>
             <hr>
             <div class="footer-product">
+              <a class="btn btn-success" onclick="addProductShoppingCart(<?php echo $_GET['id']; ?>, true)">Comprar</a>
+              <a class="btn btn-success" onclick="addProductShoppingCart(<?php echo $_GET['id']; ?>, false)">Agregar al carrito</a>
+            </div>
+            <hr>
+            <div class="footer-product">
               <p>
                 4.0
                 <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
@@ -184,6 +189,23 @@
         interval: false,
         pause: true
       })
+  </script>
+
+  <script type="text/javascript">
+    function addProductShoppingCart(idProduct, redirect) {
+        $.ajax({
+            type: 'GET',
+            url: '../controllers/shopping-cart.php',
+            data: {
+                'idProduct': idProduct,
+                'redirect': redirect,
+            },
+            dataType: 'json',
+            success: function (data) {
+              console.log('Add');
+            }
+        });
+    };
   </script>
 
 </body>

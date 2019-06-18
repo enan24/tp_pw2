@@ -168,3 +168,34 @@ function removeProduct($idProduct) {
         return die("Ha ocurrido un error al ejecutar la consulta");
     }
 }
+
+function addProductShoppingCart($idProduct) {
+  $cant = sizeof($_SESSION['shopping-cart']);
+  $_SESSION['shopping-cart'][$cant] = $idProduct;
+  echo json_encode($_SESSION['shopping-cart']);
+}
+
+function searchShoppingCart() {
+  $products = [];
+  $cant = 0;
+  $productsId = [];
+  foreach ($_SESSION['shopping-cart'] as $productId) {
+    if (!in_array($productId, $productsId)) {
+      $productsId[$productId] = $productId;
+      $sql = "SELECT product.id, title, price, image
+      FROM product JOIN product_image ON product.id = product_image.product_id
+      WHERE product.id = ".$productId." limit 1;";
+      if (!$result = $GLOBALS['conexion']->query($sql)) {
+        return die("Ha ocurrido un error al ejecutar la consulta");
+      }
+      $result = $result->fetch_assoc();
+      $result['cant'] = 1;
+      $products[$cant] = $result;
+      $cant += 1;
+    } else {
+      $pos = array_search($productId, array_column($products, 'id'));
+      $products[$pos]['cant'] += 1;
+    }
+  }
+  return $products;
+}
