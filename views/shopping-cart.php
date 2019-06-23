@@ -1,5 +1,6 @@
 <?php
-  require_once("../controllers/shopping-cart.php");
+  require_once("../resources/utils.php");
+  $products = searchShoppingCart();
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -27,28 +28,32 @@
       <table class="table">
         <thead>
           <tr>
-            <th scope="col" class="product">Product</th>
-            <th scope="col" class="price">Price</th>
+            <th scope="col" class="product">Producto</th>
+            <th scope="col" class="price">Precio</th>
+            <th scope="col" class="cant">Cantidad</th>
             <th scope="col" class="total">Total</th>
           </tr>
         </thead>
         <tbody>
           <?php
-            foreach ($products as $product) {
+          $total = 0;
+            foreach ($products as $productId => $info) {
+              $total += ($info['price']*$info['cantidad']);
               echo "
                 <tr>
                   <td class='product'>
                     <div class='media'>
                       <div class='d-flex'>
-                        <a href='product.php?id=".$product['id']."'><img src='".$product['image']."' alt=''></a>
+                        <a href='product.php?id=".$productId."'><img src='".$info['image']."' alt=''></a>
                       </div>
                       <div class='product-title'>
-                        <p><a href='product.php?id=".$product['id']."'>".$product['title']."</a></p>
+                        <p><a href='product.php?id=".$productId."'>".$info['title']."</a></p>
                       </div>
                     </div>
                   </td>
-                  <td class='price'><h5>".$product['price']."</h5></td>
-                  <td class='total'><h5>".$product['price']."</h5></td>
+                  <td class='cant'><h5>$".$info['price']."</h5></td>
+                  <td class='price'><h5>".$info['cantidad']."</h5></td>
+                  <td class='total'><h5>$".($info['price']*$info['cantidad'])."</h5></td>
                 </tr>
               ";
             }
@@ -56,17 +61,17 @@
           <tr>
             <td></td>
             <td></td>
-            <td><h5>Subtotal</h5></td>
-            <td><h5>$2160.00</h5></td>
+            <td><h5>Total</h5></td>
+            <td><h5>$<?php echo $total ?></h5></td>
           </tr>
           <tr class='btn-div'>
               <td></td>
               <td></td>
               <td></td>
-              <td>
-                <div class='btn-container'>
-                  <a class='btn btn-continue' href='home.php'>Continuar comprando</a>
-                  <a class='btn btn-confirm' href='confirm-shopping.php'>Confirmar compra</a>
+              <td style="width:100%;">
+                <div class="d-flex justify-content-center">
+                  <a class='btn btn-primary' href='home.php'>Continuar comprando</a>
+                  <a class='btn btn-success' href='confirm-shopping.php'>Confirmar compra</a>
                 </div>
               </td>
           </tr>

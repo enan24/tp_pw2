@@ -37,6 +37,10 @@
             session_start();
           }
           if (isset($_SESSION['email'])) {
+              echo '<li class="nav-item active" style="padding-right: 50px;">
+              <a href="../views/shopping-cart.php"><img src="../resources/img/cart.png" width="32" height="35"></img></a> <span id="cartBadge" class="badge badge-light">'; 
+              echo isset($_SESSION['shopping-cart']) ? sizeof($_SESSION['shopping-cart']) : 0;
+              echo '</span></li>';
               echo '<li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">

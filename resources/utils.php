@@ -170,32 +170,23 @@ function removeProduct($idProduct) {
 }
 
 function addProductShoppingCart($idProduct) {
-  $cant = sizeof($_SESSION['shopping-cart']);
-  $_SESSION['shopping-cart'][$cant] = $idProduct;
-  echo json_encode($_SESSION['shopping-cart']);
+    isset($_SESSION['shopping-cart'][$idProduct]) ? $cant = ($_SESSION['shopping-cart'][$idProduct] + 1) : $cant = 1;
+    $_SESSION['shopping-cart'][$idProduct] = $cant;
+    return sizeof($_SESSION['shopping-cart']);
 }
 
 function searchShoppingCart() {
-  $products = [];
-  $cant = 0;
-  $productsId = [];
-  foreach ($_SESSION['shopping-cart'] as $productId) {
-    if (!in_array($productId, $productsId)) {
-      $productsId[$productId] = $productId;
-      $sql = "SELECT product.id, title, price, image
-      FROM product JOIN product_image ON product.id = product_image.product_id
-      WHERE product.id = ".$productId." limit 1;";
-      if (!$result = $GLOBALS['conexion']->query($sql)) {
-        return die("Ha ocurrido un error al ejecutar la consulta");
-      }
-      $result = $result->fetch_assoc();
-      $result['cant'] = 1;
-      $products[$cant] = $result;
-      $cant += 1;
-    } else {
-      $pos = array_search($productId, array_column($products, 'id'));
-      $products[$pos]['cant'] += 1;
+    $products = [];
+    foreach ($_SESSION['shopping-cart'] as $productId => $cantidad) {
+        $sql = "SELECT p.title, p.price, i.image
+                FROM product AS p JOIN product_image AS i ON p.id = i.product_id
+                WHERE p.id = ".$productId.";";
+        if (!$result = $GLOBALS['conexion']->query($sql)) {
+            return die("Ha ocurrido un error al ejecutar la consulta");
+        }
+        $result = $result->fetch_assoc();
+        $result['cantidad'] = $cantidad;
+        $products[$productId] = $result;
     }
-  }
-  return $products;
+    return $products;
 }

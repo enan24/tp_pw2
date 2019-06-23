@@ -215,7 +215,10 @@
             },
             dataType: 'json',
             success: function (data) {
-              console.log('Add');
+              $('#cartBadge').text(data);
+              if (redirect) {
+                window.location.replace("../views/shopping-cart.php");
+              }
             }
         });
     };

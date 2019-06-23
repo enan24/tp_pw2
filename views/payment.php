@@ -1,6 +1,3 @@
-<?php
-  require_once("../controllers/payment.php");
-?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -19,6 +16,6 @@
     <?php
       include_once "../resources/templates/navbar.php";
     ?>
-    <h3>Compra realizada!</h3>
+    <h3>Compra realizada con éxito!</h3>
   </body>
 </html>

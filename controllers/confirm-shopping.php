@@ -3,7 +3,7 @@
 
   $products = searchShoppingCart();
   $total = 0;
-  foreach ($products as $product) {
-    $total += $product['price'] * $product['cant'];
+  foreach ($products as $productId => $info) {
+    $total += $info['price'] * $info['cantidad'];
   }
 ?>
