@@ -35,7 +35,8 @@
           <div class="card">
             <div class="card-header" id="headingOne">
               <h2 class="mb-0">
-                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne"
+                  aria-expanded="true" aria-controls="collapseOne">
                   Más sobre:
                 </button>
               </h2>
@@ -75,8 +76,8 @@
 
         <div class="card mt-4">
           <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-          <div class="carousel-inner">
-            <?php
+            <div class="carousel-inner">
+              <?php
               $class = "carousel-item active";
               foreach ($images as $image) {
                 echo "
@@ -88,16 +89,16 @@
               }
 
             ?>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
           </div>
-          <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-          </a>
-          <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-          </a>
-        </div>
           <div class="card-body">
             <h3 class="card-title"><?php echo $product['title']; ?></h3>
             <h4>$<?php echo $product['price']; ?></h4>
@@ -126,15 +127,21 @@
             Opiniones de los usuarios
           </div>
           <div class="card-body">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique
+              necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia,
+              necessitatibus quae sint natus.</p>
             <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
             <small class="text-muted">Publicado por Anonymous el 3/1/17</small>
             <hr>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique
+              necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia,
+              necessitatibus quae sint natus.</p>
             <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
             <small class="text-muted">Publicado por Anonymous el 3/1/17</small>
             <hr>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique
+              necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia,
+              necessitatibus quae sint natus.</p>
             <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
             <small class="text-muted">Publicado por Anonymous el 3/1/17</small>
             <hr>
@@ -154,15 +161,21 @@
               <button type="submit" name="button" class="btn btn-success">Realizar pregunta</button>
             </form>
             <hr>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique
+              necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia,
+              necessitatibus quae sint natus.</p>
             <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
             <small class="text-muted">Publicado por Anonymous el 3/1/17</small>
             <hr>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique
+              necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia,
+              necessitatibus quae sint natus.</p>
             <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
             <small class="text-muted">Publicado por Anonymous el 3/1/17</small>
             <hr>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique
+              necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia,
+              necessitatibus quae sint natus.</p>
             <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
             <small class="text-muted">Publicado por Anonymous el 3/1/17</small>
           </div>
@@ -180,10 +193,10 @@
   </footer>
 
   <script type="text/javascript">
-      $('.carousel').carousel({
-        interval: false,
-        pause: true
-      })
+    $('.carousel').carousel({
+      interval: false,
+      pause: true
+    })
   </script>
 
 </body>
