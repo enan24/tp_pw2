@@ -132,8 +132,8 @@ function getPathImage($type) {
         $path_list = array();
         foreach ($image_list as $tmp_name => $name) {
             $temp = explode(".", $name);
-            $temp2 = explode("/", $tmp_name);
-            $newfilename = round(microtime(true)) . end($temp2) . '.' . end($temp);
+            $temp2 = hash("md5", $tmp_name);
+            $newfilename = round(microtime(true)) . $temp2 . '.' . end($temp);
             $imagepath = $config['directories'][$type] . $newfilename;
             move_uploaded_file($tmp_name, $imagepath);
             array_push($path_list, $imagepath);
