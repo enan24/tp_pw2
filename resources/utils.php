@@ -177,16 +177,18 @@ function addProductShoppingCart($idProduct) {
 
 function searchShoppingCart() {
     $products = [];
-    foreach ($_SESSION['shopping-cart'] as $productId => $cantidad) {
-        $sql = "SELECT p.title, p.price, i.image
-                FROM product AS p JOIN product_image AS i ON p.id = i.product_id
-                WHERE p.id = ".$productId.";";
-        if (!$result = $GLOBALS['conexion']->query($sql)) {
-            return die("Ha ocurrido un error al ejecutar la consulta");
+    if (isset($_SESSION['shopping-cart'])) {
+        foreach ($_SESSION['shopping-cart'] as $productId => $cantidad) {
+            $sql = "SELECT p.title, p.price, i.image
+                    FROM product AS p JOIN product_image AS i ON p.id = i.product_id
+                    WHERE p.id = ".$productId.";";
+            if (!$result = $GLOBALS['conexion']->query($sql)) {
+                return die("Ha ocurrido un error al ejecutar la consulta");
+            }
+            $result = $result->fetch_assoc();
+            $result['cantidad'] = $cantidad;
+            $products[$productId] = $result;
         }
-        $result = $result->fetch_assoc();
-        $result['cantidad'] = $cantidad;
-        $products[$productId] = $result;
     }
     return $products;
 }
