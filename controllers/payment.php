@@ -23,4 +23,5 @@
             return die("Ha ocurrido un error al ejecutar la consulta ". $conexion->error);
         } 
     }
+    $_SESSION['shopping-cart'] = null;
 ?>
