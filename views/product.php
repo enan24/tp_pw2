@@ -63,11 +63,26 @@
         <h4 class="my-4">Más sobre:</h4>
         <div class="list-group">
           <?php
+          $categories = array();
             foreach ($product['categories'] as $category) {
+              array_push($categories, $category);
               echo "
                 <a href='#' class='list-group-item'>".utf8_encode($category)."</a>
               ";
             }
+          ?>
+        </div>
+
+        <h4 class="my-4">Productos relacionados:</h4>
+        <div class="list-group">
+        
+          <?php
+          $relatedProducts = getRelatedProducts($categories, $product['id']);
+          foreach ($relatedProducts as $key => $value) {
+            echo "
+                <a href='product.php?id=" . $value['id'] . "' class='list-group-item'>". $value['title'] . " $" . $value['price'] ."</a>
+              ";
+          }
           ?>
         </div>
       </div>
@@ -159,30 +174,24 @@
             Preguntas
           </div>
           <div class="card-body">
-            <form class="" action="#" method="post">
+            <form class="" action="../controllers/post-comment.php" method="post">
               <div class="mb-3">
-                <textarea class="form-control" placeholder="Escriba su pregunta aquí" required></textarea>
+                <input type="hidden" name="idProduct" value="<?php echo $product['id'] ?>">
+                <textarea class="form-control" placeholder="Escriba su pregunta aquí" name="comment" required></textarea>
               </div>
               <button type="submit" name="button" class="btn btn-success">Realizar pregunta</button>
             </form>
             <hr>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique
-              necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia,
-              necessitatibus quae sint natus.</p>
-            <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
-            <small class="text-muted">Publicado por Anonymous el 3/1/17</small>
-            <hr>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique
-              necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia,
-              necessitatibus quae sint natus.</p>
-            <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
-            <small class="text-muted">Publicado por Anonymous el 3/1/17</small>
-            <hr>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique
-              necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia,
-              necessitatibus quae sint natus.</p>
-            <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
-            <small class="text-muted">Publicado por Anonymous el 3/1/17</small>
+            <?php
+            $comments = getComments($product['id']);
+            foreach ($comments as $key => $value) {
+              $origDate = $value['date'];
+              $newDate = date("d F Y G:i", strtotime($origDate));
+              echo "<p>" . $value['comment'] . "</p>";
+              echo "<small class='text-muted'>Publicado por " . $value['email'] . " el " . $newDate . "</small>";
+              echo "<hr>";
+            }
+            ?>
           </div>
         </div>
 

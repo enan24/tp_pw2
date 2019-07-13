@@ -192,3 +192,49 @@ function searchShoppingCart() {
     }
     return $products;
 }
+
+function getRelatedProducts($categories, $thisProduct) {
+    $ids = array();
+    $subCategoryId = "";
+    foreach ($categories as $key => $value) {
+        $sql = "SELECT id
+                FROM subcategory
+                WHERE name = '$value';";
+        if (!$result = $GLOBALS['conexion']->query($sql)) {
+            return die("Ha ocurrido un error al ejecutar la consulta");
+        }
+        $subCategoryId .= $result->fetch_assoc()['id'] . ",";
+    }
+    $subCategoryId = rtrim($subCategoryId,",");
+    $sql = "SELECT DISTINCT(idProduct)
+            FROM sub_category_product
+            WHERE idSubCategory IN ($subCategoryId) AND idProduct != $thisProduct LIMIT 10;";
+    if (!$result = $GLOBALS['conexion']->query($sql)) {
+        return die("Ha ocurrido un error al ejecutar la consulta");
+    }
+    while ($row = $result->fetch_assoc()) {
+        array_push($ids, $row);
+    }
+    $products = array();
+    foreach ($ids as $key => $value) {
+        array_push($products, searchProduct($value['idProduct']));
+    }
+    return $products;
+}
+
+function getComments($idProduct) {
+    $comments = array();
+    $sql = "SELECT c.comment, c.date, u.email
+            FROM product_comment AS c
+            INNER JOIN usuario AS u ON c.user_id = u.id
+            WHERE c.product_id = $idProduct
+            ORDER BY c.date DESC;";
+
+    if (!$result = $GLOBALS['conexion']->query($sql)) {
+        return die("Ha ocurrido un error al ejecutar la consulta");
+    }
+    while ($row = $result->fetch_assoc()) {
+        array_push($comments, $row);
+    }
+    return $comments;
+}
