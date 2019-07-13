@@ -238,3 +238,73 @@ function getComments($idProduct) {
     }
     return $comments;
 }
+
+function getPurchases($idUser) {
+    if (!isset($idUser) || is_null($idUser)) {
+        header('location: index.php');
+        exit;
+    }
+    $sql = "SELECT *, (SELECT u.email FROM usuario AS u WHERE u.id = p.idUser) AS email, (SELECT u.id FROM usuario AS u WHERE u.id = p.idUser) AS rated_user
+          FROM sale AS s
+          INNER JOIN products_sale AS ps ON s.id = ps.idSale
+          INNER JOIN product AS p ON ps.idProduct = p.id
+          WHERE s.idUser = " . $idUser . ";";
+    if (!$result = $GLOBALS['conexion']->query($sql)) {
+        return die("Ha ocurrido un error al ejecutar la consulta");
+    }
+    $products = [];
+    foreach ($result as $product) {
+        $products["" . $product['id'] . ""] = $product;
+        $products["" . $product['id'] . ""]['categories'] = [];
+        $products["" . $product['id'] . ""]['images'] = [];
+        $sql = "SELECT p.id AS idProduct, su.id AS idSubCategory, su.idCategory, su.name
+            FROM product AS p INNER JOIN sub_category_product AS s ON p.id = s.idProduct
+                INNER JOIN subcategory AS su ON s.idSubCategory = su.id
+            WHERE p.id = " . $product['id'] . ";";
+        if (!$result = $GLOBALS['conexion']->query($sql)) {
+            return die("Ha ocurrido un error al ejecutar la consulta");
+        }
+        foreach ($result as $category) {
+            $products["" . $product['id'] . ""]['categories']["" . $category['idSubCategory'] . ""] = $category['name'];
+        }
+        $sql = "SELECT id, image
+            FROM product_image WHERE product_id = " . $product['id'] . ";";
+        if (!$result = $GLOBALS['conexion']->query($sql)) {
+            return die("Ha ocurrido un error al ejecutar la consulta");
+        }
+        foreach ($result as $image) {
+            $products["" . $product['id'] . ""]['images']["" . $image['id'] . ""] = $image['image'];
+        }
+    }
+    return $products;
+}
+
+function getRate($idUser) {
+    $rates = array();
+    $sql = "SELECT ur.*, (SELECT u.email FROM usuario AS u WHERE u.id = ur.who_rated_id) AS email
+            FROM user_rate AS ur
+            WHERE ur.user_rated_id = $idUser;";
+    if (!$result = $GLOBALS['conexion']->query($sql)) {
+        return die("Ha ocurrido un error al ejecutar la consulta");
+    }
+    while ($row = $result->fetch_assoc()) {
+        array_push($rates, $row);
+    }
+    return $rates;
+}
+
+function saveRate($data) {
+    $user_rated_id = $data['rated_user'];
+    $who_rated_id = $_SESSION['idUser'];
+    $rate = $data['rate'];
+    $comment = $data['comment'];
+    $product_id = $data['product_id'];
+
+    $sql = "INSERT INTO user_rate (user_rated_id, who_rated_id, rate, comment, product_id, date)
+            VALUES($user_rated_id, $who_rated_id, $rate, '$comment', $product_id, NOW());";
+
+    if (!$result = $GLOBALS['conexion']->query($sql)) {
+        return die("Ha ocurrido un error al ejecutar la consulta");
+    }
+    return true;
+}

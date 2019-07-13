@@ -93,6 +93,7 @@
           <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
               <?php
+              $rates = getRate($product['idUser']);
               $class = "carousel-item active";
               foreach ($images as $image) {
                 echo "
@@ -127,8 +128,28 @@
             <hr>
             <div class="footer-product">
               <p>
-                4.0
-                <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+                <?php
+                  $ratings = array();
+                  foreach ($rates as $key => $value) {
+                      array_push($ratings, $value['rate']);
+                  }
+                  $avgRate = array_sum($ratings)/count($ratings);
+                ?>
+                Reputación del vendedor: <?php echo $avgRate ?>
+                <span class="text-warning">
+                  <?php
+                    for ($i=0; $i < $avgRate; $i++) { 
+                      echo "&#9733;";
+                    }
+                    if ($avgRate < 5) {
+                      $emptyStart = 5 - $avgRate;
+                      for ($i=0; $i < $emptyStart; $i++) { 
+                        echo "&#9734;";
+                      }
+                    }
+                    echo "</span>";
+                  ?>
+                </span>
               </p>
               <p>
                 <?php
@@ -144,28 +165,28 @@
 
         <div class="card card-outline-secondary my-4">
           <div class="card-header">
-            Opiniones de los usuarios
+            Opiniones acerca de este vendedor
           </div>
           <div class="card-body">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique
-              necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia,
-              necessitatibus quae sint natus.</p>
-            <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
-            <small class="text-muted">Publicado por Anonymous el 3/1/17</small>
-            <hr>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique
-              necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia,
-              necessitatibus quae sint natus.</p>
-            <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
-            <small class="text-muted">Publicado por Anonymous el 3/1/17</small>
-            <hr>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique
-              necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia,
-              necessitatibus quae sint natus.</p>
-            <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
-            <small class="text-muted">Publicado por Anonymous el 3/1/17</small>
-            <hr>
-            <a href="#" class="btn btn-success">Escribir una opinion</a>
+            <?php
+              foreach ($rates as $key => $value) {
+                echo "<p>" . $value['comment'] . "</p>";
+                echo "<span class='text-warning'>";
+                for ($i=0; $i < $value['rate']; $i++) { 
+                  echo "&#9733;";
+                }
+                if ($value['rate'] < 5) {
+                  $emptyStart = 5 - $value['rate'];
+                  for ($i=0; $i < $emptyStart; $i++) { 
+                    echo "&#9734;";
+                  }
+                }
+                echo "</span>";
+                $origDate = $value['date'];
+                $newDate = date("d F Y G:i", strtotime($origDate));
+                echo " <small class='text-muted'>Publicado por " . $value['email'] . " el " . $newDate . "</small><hr>";
+              }
+            ?>
           </div>
         </div>
 

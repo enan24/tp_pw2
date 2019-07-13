@@ -49,7 +49,7 @@
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="profile.php">Mi perfil</a>
                 <a class="dropdown-item" href="#">Mis ventas</a>
-                <a class="dropdown-item" href="#">Mis compras</a>
+                <a class="dropdown-item" href="../views/purchases.php">Mis compras</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="../controllers/logout.php">Cerrar sesion</a>
               </div>
