@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 13, 2019 at 05:02 AM
+-- Generation Time: Jul 14, 2019 at 07:44 PM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.3.7
 
@@ -4269,6 +4269,13 @@ CREATE TABLE `products_sale` (
   `cant` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `products_sale`
+--
+
+INSERT INTO `products_sale` (`idSale`, `idProduct`, `cant`) VALUES
+(1, 22, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -4292,7 +4299,8 @@ INSERT INTO `product_comment` (`id`, `product_id`, `user_id`, `comment`, `date`)
 (2, 23, 35, 'dasdasdasda', '2019-07-12 23:57:24'),
 (3, 23, 35, '32132231312312312', '2019-07-12 23:57:27'),
 (4, 23, 35, '2313213312132\r\ndsadsadsda', '2019-07-12 23:57:42'),
-(5, 22, 35, 'fsddfsdfsfd', '2019-07-13 00:01:27');
+(5, 22, 35, 'fsddfsdfsfd', '2019-07-13 00:01:27'),
+(6, 22, 35, 'dsadsadsadas', '2019-07-13 19:41:41');
 
 -- --------------------------------------------------------
 
@@ -4368,6 +4376,13 @@ CREATE TABLE `sale` (
   `amount` varchar(55) NOT NULL,
   `type_pay` varchar(55) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sale`
+--
+
+INSERT INTO `sale` (`id`, `idUser`, `date_sale`, `amount`, `type_pay`) VALUES
+(1, 35, '2019-07-13 17:56:14', '30000', 'f-option5');
 
 -- --------------------------------------------------------
 
@@ -4482,6 +4497,30 @@ INSERT INTO `sub_category_product` (`idSubCategory`, `idProduct`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `user_rate`
+--
+
+CREATE TABLE `user_rate` (
+  `id` int(11) NOT NULL,
+  `user_rated_id` int(11) NOT NULL,
+  `who_rated_id` int(11) NOT NULL,
+  `rate` int(11) NOT NULL,
+  `comment` text NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `date` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `user_rate`
+--
+
+INSERT INTO `user_rate` (`id`, `user_rated_id`, `who_rated_id`, `rate`, `comment`, `product_id`, `date`) VALUES
+(1, 35, 35, 3, 'dsaadsdas', 22, '2019-07-13 19:03:13'),
+(2, 35, 35, 5, 'todo bien', 22, '2019-07-13 19:13:54');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `usuario`
 --
 
@@ -4583,6 +4622,15 @@ ALTER TABLE `sub_category_product`
   ADD KEY `id_product_fk` (`idProduct`);
 
 --
+-- Indexes for table `user_rate`
+--
+ALTER TABLE `user_rate`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_rated_fk` (`user_rated_id`),
+  ADD KEY `who_rated_fk` (`who_rated_id`),
+  ADD KEY `product_id_fk` (`product_id`);
+
+--
 -- Indexes for table `usuario`
 --
 ALTER TABLE `usuario`
@@ -4621,7 +4669,7 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `product_comment`
 --
 ALTER TABLE `product_comment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `product_image`
@@ -4639,13 +4687,19 @@ ALTER TABLE `provincia`
 -- AUTO_INCREMENT for table `sale`
 --
 ALTER TABLE `sale`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `subcategory`
 --
 ALTER TABLE `subcategory`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+
+--
+-- AUTO_INCREMENT for table `user_rate`
+--
+ALTER TABLE `user_rate`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `usuario`
@@ -4715,6 +4769,14 @@ ALTER TABLE `subcategory`
 ALTER TABLE `sub_category_product`
   ADD CONSTRAINT `fk_sub_category_id` FOREIGN KEY (`idSubCategory`) REFERENCES `subcategory` (`id`),
   ADD CONSTRAINT `id_product_fk` FOREIGN KEY (`idProduct`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `user_rate`
+--
+ALTER TABLE `user_rate`
+  ADD CONSTRAINT `product_id_fk` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
+  ADD CONSTRAINT `user_rated_fk` FOREIGN KEY (`user_rated_id`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `who_rated_fk` FOREIGN KEY (`who_rated_id`) REFERENCES `usuario` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
