@@ -13,6 +13,13 @@ function isLogged() {
     }
 }
 
+function isAdmin() {
+    if ((!isset($_SESSION["admin"]) || $_SESSION["admin"] != 1)) {
+        header("location: index.php");
+        exit;
+    }
+}
+
 function searchUser($id) {
     if (!isset($id) || is_null($id)) {
         header('location: index.php');
@@ -307,4 +314,114 @@ function saveRate($data) {
         return die("Ha ocurrido un error al ejecutar la consulta");
     }
     return true;
+}
+
+function getInterestToPaid($idUser) {
+    $sql = "SELECT s.date_sale, s.amount, s.id, si.id AS 'sale_interest_id'
+            FROM sale_interest AS si
+            INNER JOIN sale AS s ON si.sale_id = s.id
+            WHERE si.user_id = $idUser AND si.paid = 0;";
+
+    if (!$result = $GLOBALS['conexion']->query($sql)) {
+        return die("Ha ocurrido un error al ejecutar la consulta");
+    }
+    $purchasesWithoutPayment = array();
+    while ($row = $result->fetch_assoc()) {
+        array_push($purchasesWithoutPayment, $row);
+    }
+    foreach ($purchasesWithoutPayment as $key => $value) {
+        $idSale = $value['id'];
+        $sql = "SELECT p.title, ps.cant
+                FROM products_sale AS ps
+                INNER JOIN product AS p ON ps.idProduct = p.id
+                WHERE ps.idSale  = $idSale;";
+        if (!$result = $GLOBALS['conexion']->query($sql)) {
+            return die("Ha ocurrido un error al ejecutar la consulta");
+        }
+        $purchasesWithoutPayment[$key]['productsInvolved'] = array();
+        while ($row = $result->fetch_assoc()) {
+            array_push($purchasesWithoutPayment[$key]['productsInvolved'], $row);
+        }
+    }
+    return $purchasesWithoutPayment;
+}
+
+function paidInterest($sale_interest_id) {
+    $sql = "UPDATE sale_interest SET paid = 1
+            WHERE id = $sale_interest_id;";
+    if (!$result = $GLOBALS['conexion']->query($sql)) {
+        return die("Ha ocurrido un error al ejecutar la consulta");
+    }
+}
+
+function getPaidInterest() {
+    $sql = "SELECT SUM(s.amount) AS 'total', MONTH(s.date_sale) AS 'mes', YEAR(s.date_sale) AS 'anio', COUNT(*) AS 'transacciones'
+            FROM sale_interest AS si
+            INNER JOIN sale AS s ON si.sale_id = s.id
+            WHERE si.paid = 1
+            GROUP BY mes, anio
+            ORDER BY mes, anio ASC;";
+    if (!$result = $GLOBALS['conexion']->query($sql)) {
+        return die("Ha ocurrido un error al ejecutar la consulta " . $GLOBALS['conexion']->error);
+    }
+    $transactions = array();
+    while ($row = $result->fetch_assoc()) {
+        array_push($transactions, $row);
+    }
+    return $transactions;
+}
+
+function getImageProfile() {
+  $sql = "SELECT foto FROM mas_info_usuario WHERE usuario = " . $_SESSION['idUser'] . ";";
+  if (!$result = $GLOBALS['conexion']->query($sql)) {
+      return die("Ha ocurrido un error al ejecutar la consulta");
+  }
+  $result = $result->fetch_assoc();
+  return $result['foto'];
+}
+
+function searchAllUsers() {
+  $sql = "SELECT u.id AS userid, u.bloqueado, i.nombre, i.apellido FROM usuario AS u JOIN mas_info_usuario AS i ON u.id = i.usuario";
+  if (!$result = $GLOBALS['conexion']->query($sql)) {
+      return die("Ha ocurrido un error al ejecutar la consulta");
+  }
+  return $result;
+}
+
+function lockOrUnlockUser($action, $user) {
+  $bloqueado = $action === 'bloquear' ? 1 : 0;
+  $sql = "UPDATE usuario SET bloqueado = $bloqueado WHERE id = $user";
+  if (!$result = $GLOBALS['conexion']->query($sql)) {
+      return die("Ha ocurrido un error al ejecutar la consulta");
+  }
+  $message = $bloqueado === 1 ? "El usuario fue bloqueado con exito." : "El usuario fue desbloqueado con exito.";
+  return $message;
+}
+
+function loadProductsHome() {
+  $sql = "SELECT id, idUser, title, description, price FROM product LIMIT 15";
+  if (!$result = $GLOBALS['conexion']->query($sql)) {
+      return die("Ha ocurrido un error al ejecutar la consulta");
+  }
+  $products = array();
+  while ($product = $result->fetch_assoc()) {
+      $sql = "SELECT image FROM product_image WHERE product_id = ".$product['id']." LIMIT 1";
+      if (!$image = $GLOBALS['conexion']->query($sql)) {
+          return die("Ha ocurrido un error al ejecutar la consulta");
+      }
+      $image = $image->fetch_assoc();
+      $product['image'] = $image['image'];
+      $rates = getRate($product['idUser']);
+      $ratings = array();
+      foreach ($rates as $key => $value) {
+          array_push($ratings, $value['rate']);
+      }
+      $avgRate = 0;
+      if ($sum = array_sum($ratings) > 0) {
+        $avgRate = array_sum($ratings)/count($ratings);
+      }
+      $product['avgRate'] = $avgRate;
+      array_push($products, $product);
+  }
+  return $products;
 }
