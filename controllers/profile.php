@@ -18,3 +18,5 @@ $products = [];
 foreach ($resultProducts as $product) {
     $products['' . $product['id'] . ''] = new Product($product);
 }
+
+$purchasesWithoutPayment = getInterestToPaid($user['idUser']);
