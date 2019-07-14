@@ -75,7 +75,7 @@
 
         <h4 class="my-4">Productos relacionados:</h4>
         <div class="list-group">
-        
+
           <?php
           $relatedProducts = getRelatedProducts($categories, $product['id']);
           foreach ($relatedProducts as $key => $value) {
@@ -133,17 +133,25 @@
                   foreach ($rates as $key => $value) {
                       array_push($ratings, $value['rate']);
                   }
-                  $avgRate = array_sum($ratings)/count($ratings);
+                  $avgRate = 0;
+                  if ($sum = array_sum($ratings) > 0) {
+                    $avgRate = array_sum($ratings)/count($ratings);
+                  }
                 ?>
-                Reputación del vendedor: <?php echo $avgRate ?>
+                Reputación del vendedor: <?php
+                  if ($avgRate === 0) {
+                    echo "No tiene calificaciones.";
+                  } else {
+                    echo $avgRate;
+                  } ?>
                 <span class="text-warning">
                   <?php
-                    for ($i=0; $i < $avgRate; $i++) { 
+                    for ($i=0; $i < $avgRate; $i++) {
                       echo "&#9733;";
                     }
                     if ($avgRate < 5) {
                       $emptyStart = 5 - $avgRate;
-                      for ($i=0; $i < $emptyStart; $i++) { 
+                      for ($i=0; $i < $emptyStart; $i++) {
                         echo "&#9734;";
                       }
                     }
@@ -169,22 +177,27 @@
           </div>
           <div class="card-body">
             <?php
-              foreach ($rates as $key => $value) {
-                echo "<p>" . $value['comment'] . "</p>";
-                echo "<span class='text-warning'>";
-                for ($i=0; $i < $value['rate']; $i++) { 
-                  echo "&#9733;";
-                }
-                if ($value['rate'] < 5) {
-                  $emptyStart = 5 - $value['rate'];
-                  for ($i=0; $i < $emptyStart; $i++) { 
-                    echo "&#9734;";
+              if (count($rates) > 0) {
+
+                foreach ($rates as $key => $value) {
+                  echo "<p>" . $value['comment'] . "</p>";
+                  echo "<span class='text-warning'>";
+                  for ($i=0; $i < $value['rate']; $i++) {
+                    echo "&#9733;";
                   }
+                  if ($value['rate'] < 5) {
+                    $emptyStart = 5 - $value['rate'];
+                    for ($i=0; $i < $emptyStart; $i++) {
+                      echo "&#9734;";
+                    }
+                  }
+                  echo "</span>";
+                  $origDate = $value['date'];
+                  $newDate = date("d F Y G:i", strtotime($origDate));
+                  echo " <small class='text-muted'>Publicado por " . $value['email'] . " el " . $newDate . "</small><hr>";
                 }
-                echo "</span>";
-                $origDate = $value['date'];
-                $newDate = date("d F Y G:i", strtotime($origDate));
-                echo " <small class='text-muted'>Publicado por " . $value['email'] . " el " . $newDate . "</small><hr>";
+              } else {
+                echo "Este vendedor no tiene opiniones.";
               }
             ?>
           </div>

@@ -13,10 +13,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+          <a class="nav-link" href="home.php">Home <span class="sr-only">(current)</span></a>
         </li>
 
       </ul>
@@ -38,7 +35,7 @@
           }
           if (isset($_SESSION['email'])) {
               echo '<li class="nav-item active" style="padding-right: 50px;">
-              <a href="../views/shopping-cart.php"><img src="../resources/img/cart.png" width="32" height="35"></img></a> <span id="cartBadge" class="badge badge-light">'; 
+              <a href="../views/shopping-cart.php"><img src="../resources/img/cart.png" width="32" height="35"></img></a> <span id="cartBadge" class="badge badge-light">';
               echo isset($_SESSION['shopping-cart']) ? sizeof($_SESSION['shopping-cart']) : 0;
               echo '</span></li>';
               echo '<li class="nav-item dropdown">

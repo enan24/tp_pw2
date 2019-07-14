@@ -4,7 +4,6 @@ include_once "../controllers/profile.php";
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <link rel="icon" href="../resources/img/favico.jpg">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title><?php echo $user['nombre'] ?> - Perfil</title>
@@ -18,13 +17,18 @@ include_once "../resources/templates/javascript.html";
     <?php
 include_once '../resources/templates/headProfile.php';
 ?>
-
+    <?php if ($user['admin']) {
+            echo "
+              <div class='container'>
+                <a class='btn btn-primary' href='users-list.php'>Lista de usuarios</a>
+              </div>
+              <br>
+            ";
+          }
+    ?>
     <ul class="nav nav-tabs" id="profileData" role="tablist">
       <li class="nav-item">
         <a class="nav-link active" id="profile-products-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Mis Productos</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Mis Datos</a>
       </li>
     </ul>
     <div class="tab-content" id="myTabContent">
@@ -69,9 +73,6 @@ foreach ($products as $product) {
 ?>
           </div>
         </div>
-      </div>
-      <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-            Sin datos...
       </div>
     </div>
     <br>

@@ -13,6 +13,13 @@ function isLogged() {
     }
 }
 
+function isAdmin() {
+    if ((!isset($_SESSION["admin"]) || $_SESSION["admin"] != 1)) {
+        header("location: index.php");
+        exit;
+    }
+}
+
 function searchUser($id) {
     if (!isset($id) || is_null($id)) {
         header('location: index.php');
@@ -307,4 +314,59 @@ function saveRate($data) {
         return die("Ha ocurrido un error al ejecutar la consulta");
     }
     return true;
+}
+
+function getImageProfile() {
+  $sql = "SELECT foto FROM mas_info_usuario WHERE usuario = " . $_SESSION['idUser'] . ";";
+  if (!$result = $GLOBALS['conexion']->query($sql)) {
+      return die("Ha ocurrido un error al ejecutar la consulta");
+  }
+  $result = $result->fetch_assoc();
+  return $result['foto'];
+}
+
+function searchAllUsers() {
+  $sql = "SELECT u.id AS userid, u.bloqueado, i.nombre, i.apellido FROM usuario AS u JOIN mas_info_usuario AS i ON u.id = i.usuario";
+  if (!$result = $GLOBALS['conexion']->query($sql)) {
+      return die("Ha ocurrido un error al ejecutar la consulta");
+  }
+  return $result;
+}
+
+function lockOrUnlockUser($action, $user) {
+  $bloqueado = $action === 'bloquear' ? 1 : 0;
+  $sql = "UPDATE usuario SET bloqueado = $bloqueado WHERE id = $user";
+  if (!$result = $GLOBALS['conexion']->query($sql)) {
+      return die("Ha ocurrido un error al ejecutar la consulta");
+  }
+  $message = $bloqueado === 1 ? "El usuario fue bloqueado con exito." : "El usuario fue desbloqueado con exito.";
+  return $message;
+}
+
+function loadProductsHome() {
+  $sql = "SELECT id, idUser, title, description, price FROM product LIMIT 15";
+  if (!$result = $GLOBALS['conexion']->query($sql)) {
+      return die("Ha ocurrido un error al ejecutar la consulta");
+  }
+  $products = array();
+  while ($product = $result->fetch_assoc()) {
+      $sql = "SELECT image FROM product_image WHERE product_id = ".$product['id']." LIMIT 1";
+      if (!$image = $GLOBALS['conexion']->query($sql)) {
+          return die("Ha ocurrido un error al ejecutar la consulta");
+      }
+      $image = $image->fetch_assoc();
+      $product['image'] = $image['image'];
+      $rates = getRate($product['idUser']);
+      $ratings = array();
+      foreach ($rates as $key => $value) {
+          array_push($ratings, $value['rate']);
+      }
+      $avgRate = 0;
+      if ($sum = array_sum($ratings) > 0) {
+        $avgRate = array_sum($ratings)/count($ratings);
+      }
+      $product['avgRate'] = $avgRate;
+      array_push($products, $product);
+  }
+  return $products;
 }
