@@ -26,7 +26,6 @@
     ?>
 
     <div class="container">
-    <span id="location"></span>
         <?php
     if (isset($_SESSION['email'])) {
         echo "<br><h3>Bienvenido " . $_SESSION['email'] . "</h3>";

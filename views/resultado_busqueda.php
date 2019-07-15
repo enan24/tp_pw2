@@ -27,8 +27,21 @@
     ?>
     <br>
     <div class="container">
+    <div class="row">
+    <form id="formLocation" action="../views/resultado_busqueda.php" method="get">
+    <input type="hidden" name="keyword" id="keyword" value="<?php echo isset($keyword) ? $keyword : ''; ?>">
+    <input type="hidden" name="latitud" id="latitud">
+    <input type="hidden" name="longitud" id="longitud">
+    <div class="d-flex align-items-center">Buscar por ubicación: <input id="pac-input" class="form-control" type="text" placeholder="Ingrese una ubicación"><button class="btn btn-primary" type="submit">Buscar</button></div>
+    </form>
+</div><br>
         <div class="row">
+
+        
             <?php
+                if ($productos) {
+                    # code...
+                
                 foreach ($productos as $producto) {
                     $category = "";
                     $subCategories = "";
@@ -80,6 +93,9 @@
                     </div>
                 </div>';
                 }
+            } else {
+                echo "<h2>No hay resultados</h2>";
+            }
             ?>
         </div>
         <!-- /.row -->
@@ -87,8 +103,36 @@
     <!-- /.container -->
 
     <script src="../resources/js/geolocation.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCiIDP3P5IqtJ4LQGy2--zrhbtCsXJGpjI&libraries=places"></script>
+    <script>
 
+    $('#formLocation').on('keyup keypress', function(e) {
+    var keyCode = e.keyCode || e.which;
+    if (keyCode === 13) { 
+        e.preventDefault();
+        return false;
+    }
+    });
 
+    var defaultBounds = new google.maps.LatLngBounds(
+        new google.maps.LatLng(-33.8902, 151.1759),
+        new google.maps.LatLng(-33.8474, 151.2631));
+
+    var input = document.getElementById('pac-input');
+    var options = {
+        bounds: defaultBounds,
+        types: ['address']
+    };
+
+    var autocomplete = new google.maps.places.Autocomplete(input, options);
+
+	google.maps.event.addListener(autocomplete, 'place_changed', function () {
+	    var place = autocomplete.getPlace();
+	    document.getElementById('latitud').value = place.geometry.location.lat();
+	    document.getElementById('longitud').value = place.geometry.location.lng();
+    });
+    
+    </script>
 </body>
 
 </html>
