@@ -69,7 +69,7 @@ foreach ($products as $product) {
     echo "</div>
                     <div class='card-footer btns'>
                       <div class='container-btns'>
-                        <a class='btn-product-footer' href='new-product.php?update=" . $product->id . "'>Modificar</a>
+                        <a class='btn-product-footer' href='update-product.php?id=" . $product->id . "'>Modificar</a>
                         <a class='btn-product-footer' href='profile.php?remove=" . $product->id . "'>Eliminar</a>
                       </div>
                     </div>
