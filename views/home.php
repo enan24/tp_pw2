@@ -1,3 +1,6 @@
+<?php
+  require_once "../controllers/home.php";
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -21,9 +24,8 @@
     <?php
     include_once "../resources/templates/navbar.php";
     ?>
-   
+
     <div class="container">
-    <span id="location"></span>
         <?php
     if (isset($_SESSION['email'])) {
         echo "<br><h3>Bienvenido " . $_SESSION['email'] . "</h3>";
@@ -51,101 +53,45 @@
 
         <div class="row">
 
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card h-100">
-                    <a href="#"><img class="card-img-top" src="../resources/img/producto1.jpg" alt=""></a>
-                    <div class="card-body">
-                        <h4 class="card-title">
-                            <a href="#">Caja de herramientas</a>
-                        </h4>
-                        <h5>$1300.00</h5>
-                        <p class="card-text">Caja con 80 piezas de 30 medidas</p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">&#9733; &#9733; &#9734; &#9734; &#9734;</small>
-                    </div>
-                </div>
-            </div>
+            <?php
+              foreach ($products as $product) {
+                echo "
+                  <div class='col-lg-4 col-md-6 mb-4'>
+                      <div class='card h-100'>
+                          <a href='".$product['id']."'><img class='card-img-top' src='".$product['image']."' alt=''></a>
+                          <div class='card-body'>
+                              <h4 class='card-title'>
+                                  <a href='product.php?id=".$product['id']."'>".$product['title']."</a>
+                              </h4>
+                              <h5>$1300.00</h5>
+                              <p class='card-text'>".$product['description']."</p>
+                          </div>
+                          <div class='card-footer'>
+                              ";
+                if ($product['avgRate'] === 0) {
+                  echo "El vendedor no tiene calificaciones. ";
+                } else {
+                  echo "Reputación del vendedor: " . $product['avgRate']. " ";
+                }
+                echo "<span class='text-warning'>";
+                for ($i=0; $i < $product['avgRate']; $i++) {
+                  echo "&#9733;";
+                }
+                if ($product['avgRate'] < 5) {
+                  $emptyStart = 5 - $product['avgRate'];
+                  for ($i=0; $i < $emptyStart; $i++) {
+                    echo "&#9734;";
+                  }
+                }
+                echo "</span>";
 
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card h-100">
-                    <a href="#"><img class="card-img-top" src="../resources/img/producto2.jpg" alt=""></a>
-                    <div class="card-body">
-                        <h4 class="card-title">
-                            <a href="#">Maletin de herramientas</a>
-                        </h4>
-                        <h5>$1800.00</h5>
-                        <p class="card-text">Maletin de herramientas con 100 piezas</p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card h-100">
-                    <a href="#"><img class="card-img-top" src="../resources/img/producto3.jpg" alt=""></a>
-                    <div class="card-body">
-                        <h4 class="card-title">
-                            <a href="#">Malentín de herramientas</a>
-                        </h4>
-                        <h5>$1350.00</h5>
-                        <p class="card-text">Malentín con 30 piezas</p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card h-100">
-                    <a href="#"><img class="card-img-top" src="../resources/img/producto4.jpg" alt=""></a>
-                    <div class="card-body">
-                        <h4 class="card-title">
-                            <a href="#">Impresora Epson</a>
-                        </h4>
-                        <h5>$2530.00</h5>
-                        <p class="card-text">Funcione de impresion en blanco y negro,a color, escaner, fotocopiadora</p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card h-100">
-                    <a href="#"><img class="card-img-top" src="../resources/img/producto5.jpg" alt=""></a>
-                    <div class="card-body">
-                        <h4 class="card-title">
-                            <a href="#">Auriculares Inalambricos</a>
-                        </h4>
-                        <h5>$1500.00</h5>
-                        <p class="card-text">Largo alcance, sonido potente</p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card h-100">
-                    <a href="#"><img class="card-img-top" src="../resources/img/producto6.jpg" alt=""></a>
-                    <div class="card-body">
-                        <h4 class="card-title">
-                            <a href="#">Tablet 10'</a>
-                        </h4>
-                        <h5>$2000.00</h5>
-                        <p class="card-text">Sistema operativo Android, camara 10 megapixeles</p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                    </div>
-                </div>
-            </div>
+                echo "
+                          </div>
+                      </div>
+                  </div>
+                ";
+              }
+            ?>
 
         </div>
         <!-- /.row -->

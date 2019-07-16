@@ -13,6 +13,8 @@ class Product
     public $date;
     public $conexion;
     public $categories;
+    public $latitud;
+    public $longitud;
 
     public function __construct($product)
     {
@@ -25,6 +27,8 @@ class Product
         $this->subDescription = $product['subDescription'];
         $this->price = $product['price'];
         $this->date = $product['create_date'];
+        $this->latitud = $product['latitud'];
+        $this->longitud = $product['longitud'];
         $this->conexion = new Conexion();
     }
 
@@ -61,11 +65,11 @@ class Product
     {
         $conexion = $this->conexion->conectar();
         $price = (int) $this->price;
-        $sql = "INSERT INTO product (idUser, title, description, subDescription, price, create_date)
-              VALUES ($this->idUser, '$this->title', '$this->description', '$this->subDescription', '$price', '$this->date');";
+        $sql = "INSERT INTO product (idUser, title, description, subDescription, price, create_date, latitud, longitud)
+              VALUES ($this->idUser, '$this->title', '$this->description', '$this->subDescription', '$price', '$this->date', '$this->latitud', '$this->longitud');";
 
         if (!$result = $conexion->query($sql)) {
-            return die("Ha ocurrido un error al ejecutar la consulta");
+            return die("Ha ocurrido un error al ejecutar la consulta" . $conexion->error);
         }
 
         $last_id = $conexion->insert_id;
@@ -86,9 +90,29 @@ class Product
         return;
     }
 
-    public function updateProduct()
+    public function updateProduct($subcategories)
     {
-
+      $conexion = $this->conexion->conectar();
+      $price = (int) $this->price;
+      $sql = "UPDATE product SET title = '".$this->title."', description = '".$this->description."', subDescription = '".$this->subDescription."', price = ".$this->price." WHERE id = ".$this->id."";
+      if (!$result = $conexion->query($sql)) {
+          return die("Ha ocurrido un error al ejecutar la consulta");
+      }
+      foreach ($this->images as $image) {
+          $sql = "INSERT INTO product_image (product_id, image) VALUES (".$this->id.", '$image');";
+          if (!$result = $conexion->query($sql)) {
+              return die("Ha ocurrido un error al ejecutar la consulta");
+          }
+      }
+      foreach ($subcategories as $subcategory) {
+          $sql = "INSERT INTO sub_category_product (idSubCategory, idProduct)
+                        VALUES ('$subcategory', ".$this->id.");";
+          if (!$result = $conexion->query($sql)) {
+              return die("Ha ocurrido un error al ejecutar la consulta");
+          }
+      }
+      $message = "Actualizado con exito.";
+      return $message;
     }
 
 }

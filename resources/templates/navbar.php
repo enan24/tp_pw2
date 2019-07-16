@@ -13,10 +13,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+          <a class="nav-link" href="home.php">Home <span class="sr-only">(current)</span></a>
         </li>
 
       </ul>
@@ -37,6 +34,10 @@
             session_start();
           }
           if (isset($_SESSION['email'])) {
+              echo '<li class="nav-item active" style="padding-right: 50px;">
+              <a href="../views/shopping-cart.php"><img src="../resources/img/cart.png" width="32" height="35"></img></a> <span id="cartBadge" class="badge badge-light">';
+              echo isset($_SESSION['shopping-cart']) ? sizeof($_SESSION['shopping-cart']) : 0;
+              echo '</span></li>';
               echo '<li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
@@ -45,8 +46,12 @@
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="profile.php">Mi perfil</a>
                 <a class="dropdown-item" href="#">Mis ventas</a>
-                <a class="dropdown-item" href="#">Mis compras</a>
-                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="../views/purchases.php">Mis compras</a>';
+                if (isset($_SESSION['admin']) && $_SESSION['admin'] == 1) {
+                  echo '<a class="dropdown-item" href="../views/liquidaciones.php">Liquidaciones</a>';
+                  echo '<a class="dropdown-item" href="../views/estadisticas.php">Estadísticas</a>';
+              }
+                echo '<div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="../controllers/logout.php">Cerrar sesion</a>
               </div>
             </li>';

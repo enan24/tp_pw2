@@ -96,6 +96,8 @@ foreach ($categories as $category) {
     ?>
       </div>
       <div style="text-align:right">
+      <input type="hidden" name="latitud" id="latitud">
+      <input type="hidden" name="longitud" id="longitud">
         <button type="submit" class="btn btn-primary"
           style="background-color: skyblue; border-color: skyblue; color: black;">Guardar</button>
       </div>
@@ -104,6 +106,7 @@ foreach ($categories as $category) {
   <?php
 }
 ?>
+<script src="../resources/js/geolocation.js"></script>
   <script type="text/javascript">
     $('.custom-file-input').on('change', function () {
       let fileName = $(this).val().split('\\').pop();

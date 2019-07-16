@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 04, 2019 at 11:16 PM
--- Server version: 10.1.40-MariaDB
--- PHP Version: 7.3.5
+-- Generation Time: Jul 14, 2019 at 07:44 PM
+-- Server version: 10.3.16-MariaDB
+-- PHP Version: 7.3.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,8 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `tp_final`
 --
-CREATE DATABASE IF NOT EXISTS `tp_final` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `tp_final`;
 
 -- --------------------------------------------------------
 
@@ -30,7 +28,6 @@ USE `tp_final`;
 -- Table structure for table `category`
 --
 
-DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL
@@ -52,7 +49,6 @@ INSERT INTO `category` (`id`, `name`) VALUES
 -- Table structure for table `localidad`
 --
 
-DROP TABLE IF EXISTS `localidad`;
 CREATE TABLE `localidad` (
   `id` int(11) NOT NULL,
   `nombre` varchar(255) NOT NULL,
@@ -4215,7 +4211,6 @@ INSERT INTO `localidad` (`id`, `nombre`, `provincia`) VALUES
 -- Table structure for table `mas_info_usuario`
 --
 
-DROP TABLE IF EXISTS `mas_info_usuario`;
 CREATE TABLE `mas_info_usuario` (
   `id` int(11) NOT NULL,
   `usuario` int(11) NOT NULL,
@@ -4244,7 +4239,6 @@ INSERT INTO `mas_info_usuario` (`id`, `usuario`, `nombre`, `apellido`, `cuit`, `
 -- Table structure for table `product`
 --
 
-DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product` (
   `id` int(11) NOT NULL,
   `idUser` int(11) NOT NULL,
@@ -4255,18 +4249,78 @@ CREATE TABLE `product` (
   `create_date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `product`
+--
+
+INSERT INTO `product` (`id`, `idUser`, `title`, `description`, `subDescription`, `price`, `create_date`) VALUES
+(22, 35, 'Dell Inspiron 5379', 'notebook', 'usada', '30000', '2019-07-13 03:46:07'),
+(23, 35, 'Notebook Lenovo', 'Notebook', 'dsaadsads', '15000', '2019-07-13 04:29:23');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `products_sale`
+--
+
+CREATE TABLE `products_sale` (
+  `idSale` int(11) NOT NULL,
+  `idProduct` int(11) NOT NULL,
+  `cant` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `products_sale`
+--
+
+INSERT INTO `products_sale` (`idSale`, `idProduct`, `cant`) VALUES
+(1, 22, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_comment`
+--
+
+CREATE TABLE `product_comment` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `comment` text NOT NULL,
+  `date` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `product_comment`
+--
+
+INSERT INTO `product_comment` (`id`, `product_id`, `user_id`, `comment`, `date`) VALUES
+(1, 23, 35, 'dasadsadsdadas', '2019-07-12 23:50:52'),
+(2, 23, 35, 'dasdasdasda', '2019-07-12 23:57:24'),
+(3, 23, 35, '32132231312312312', '2019-07-12 23:57:27'),
+(4, 23, 35, '2313213312132\r\ndsadsadsda', '2019-07-12 23:57:42'),
+(5, 22, 35, 'fsddfsdfsfd', '2019-07-13 00:01:27'),
+(6, 22, 35, 'dsadsadsadas', '2019-07-13 19:41:41');
+
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `product_image`
 --
 
-DROP TABLE IF EXISTS `product_image`;
 CREATE TABLE `product_image` (
   `id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `image` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `product_image`
+--
+
+INSERT INTO `product_image` (`id`, `product_id`, `image`) VALUES
+(43, 22, '../resources/img/products/1562982368f489064ac3d96bf827b2df466c8f959a.png'),
+(44, 23, '../resources/img/products/156298496493d58e93d59094ac8328787c0f36466e.png');
 
 -- --------------------------------------------------------
 
@@ -4274,7 +4328,6 @@ CREATE TABLE `product_image` (
 -- Table structure for table `provincia`
 --
 
-DROP TABLE IF EXISTS `provincia`;
 CREATE TABLE `provincia` (
   `id` int(11) NOT NULL,
   `nombre` varchar(255) NOT NULL
@@ -4313,10 +4366,30 @@ INSERT INTO `provincia` (`id`, `nombre`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `sale`
+--
+
+CREATE TABLE `sale` (
+  `id` int(11) NOT NULL,
+  `idUser` int(11) NOT NULL,
+  `date_sale` datetime DEFAULT NULL,
+  `amount` varchar(55) NOT NULL,
+  `type_pay` varchar(55) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sale`
+--
+
+INSERT INTO `sale` (`id`, `idUser`, `date_sale`, `amount`, `type_pay`) VALUES
+(1, 35, '2019-07-13 17:56:14', '30000', 'f-option5');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `subcategory`
 --
 
-DROP TABLE IF EXISTS `subcategory`;
 CREATE TABLE `subcategory` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
@@ -4404,11 +4477,46 @@ INSERT INTO `subcategory` (`id`, `name`, `idCategory`) VALUES
 -- Table structure for table `sub_category_product`
 --
 
-DROP TABLE IF EXISTS `sub_category_product`;
 CREATE TABLE `sub_category_product` (
   `idSubCategory` int(11) NOT NULL,
   `idProduct` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sub_category_product`
+--
+
+INSERT INTO `sub_category_product` (`idSubCategory`, `idProduct`) VALUES
+(49, 22),
+(49, 23),
+(50, 22),
+(50, 23),
+(51, 22),
+(51, 23);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_rate`
+--
+
+CREATE TABLE `user_rate` (
+  `id` int(11) NOT NULL,
+  `user_rated_id` int(11) NOT NULL,
+  `who_rated_id` int(11) NOT NULL,
+  `rate` int(11) NOT NULL,
+  `comment` text NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `date` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `user_rate`
+--
+
+INSERT INTO `user_rate` (`id`, `user_rated_id`, `who_rated_id`, `rate`, `comment`, `product_id`, `date`) VALUES
+(1, 35, 35, 3, 'dsaadsdas', 22, '2019-07-13 19:03:13'),
+(2, 35, 35, 5, 'todo bien', 22, '2019-07-13 19:13:54');
 
 -- --------------------------------------------------------
 
@@ -4416,13 +4524,12 @@ CREATE TABLE `sub_category_product` (
 -- Table structure for table `usuario`
 --
 
-DROP TABLE IF EXISTS `usuario`;
 CREATE TABLE `usuario` (
   `id` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `bloqueado` tinyint(1) NOT NULL DEFAULT '0',
-  `admin` tinyint(1) NOT NULL DEFAULT '0'
+  `bloqueado` tinyint(1) NOT NULL DEFAULT 0,
+  `admin` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -4466,6 +4573,21 @@ ALTER TABLE `product`
   ADD KEY `fk_product_user` (`idUser`);
 
 --
+-- Indexes for table `products_sale`
+--
+ALTER TABLE `products_sale`
+  ADD PRIMARY KEY (`idSale`,`idProduct`),
+  ADD KEY `fk_sale_product_id` (`idProduct`);
+
+--
+-- Indexes for table `product_comment`
+--
+ALTER TABLE `product_comment`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `product_comment_fk` (`product_id`),
+  ADD KEY `user_comment_fk` (`user_id`);
+
+--
 -- Indexes for table `product_image`
 --
 ALTER TABLE `product_image`
@@ -4477,6 +4599,13 @@ ALTER TABLE `product_image`
 --
 ALTER TABLE `provincia`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `sale`
+--
+ALTER TABLE `sale`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_sale` (`idUser`);
 
 --
 -- Indexes for table `subcategory`
@@ -4491,6 +4620,15 @@ ALTER TABLE `subcategory`
 ALTER TABLE `sub_category_product`
   ADD PRIMARY KEY (`idSubCategory`,`idProduct`),
   ADD KEY `id_product_fk` (`idProduct`);
+
+--
+-- Indexes for table `user_rate`
+--
+ALTER TABLE `user_rate`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_rated_fk` (`user_rated_id`),
+  ADD KEY `who_rated_fk` (`who_rated_id`),
+  ADD KEY `product_id_fk` (`product_id`);
 
 --
 -- Indexes for table `usuario`
@@ -4525,13 +4663,19 @@ ALTER TABLE `mas_info_usuario`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+
+--
+-- AUTO_INCREMENT for table `product_comment`
+--
+ALTER TABLE `product_comment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `product_image`
 --
 ALTER TABLE `product_image`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `provincia`
@@ -4540,10 +4684,22 @@ ALTER TABLE `provincia`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
 
 --
+-- AUTO_INCREMENT for table `sale`
+--
+ALTER TABLE `sale`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `subcategory`
 --
 ALTER TABLE `subcategory`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+
+--
+-- AUTO_INCREMENT for table `user_rate`
+--
+ALTER TABLE `user_rate`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `usuario`
@@ -4576,10 +4732,30 @@ ALTER TABLE `product`
   ADD CONSTRAINT `fk_product_user` FOREIGN KEY (`idUser`) REFERENCES `usuario` (`id`);
 
 --
+-- Constraints for table `products_sale`
+--
+ALTER TABLE `products_sale`
+  ADD CONSTRAINT `fk_product_sale_id` FOREIGN KEY (`idSale`) REFERENCES `sale` (`id`),
+  ADD CONSTRAINT `fk_sale_product_id` FOREIGN KEY (`idProduct`) REFERENCES `product` (`id`);
+
+--
+-- Constraints for table `product_comment`
+--
+ALTER TABLE `product_comment`
+  ADD CONSTRAINT `product_comment_fk` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
+  ADD CONSTRAINT `user_comment_fk` FOREIGN KEY (`user_id`) REFERENCES `usuario` (`id`);
+
+--
 -- Constraints for table `product_image`
 --
 ALTER TABLE `product_image`
   ADD CONSTRAINT `product_fk` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `sale`
+--
+ALTER TABLE `sale`
+  ADD CONSTRAINT `fk_sale` FOREIGN KEY (`idUser`) REFERENCES `usuario` (`id`);
 
 --
 -- Constraints for table `subcategory`
@@ -4593,6 +4769,14 @@ ALTER TABLE `subcategory`
 ALTER TABLE `sub_category_product`
   ADD CONSTRAINT `fk_sub_category_id` FOREIGN KEY (`idSubCategory`) REFERENCES `subcategory` (`id`),
   ADD CONSTRAINT `id_product_fk` FOREIGN KEY (`idProduct`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `user_rate`
+--
+ALTER TABLE `user_rate`
+  ADD CONSTRAINT `product_id_fk` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
+  ADD CONSTRAINT `user_rated_fk` FOREIGN KEY (`user_rated_id`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `who_rated_fk` FOREIGN KEY (`who_rated_id`) REFERENCES `usuario` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

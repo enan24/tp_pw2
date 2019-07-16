@@ -1,0 +1,67 @@
+.table {
+  width: 100%;
+}
+thead {
+  width: 100%;
+}
+thead th {
+  font-size: 14px;
+  font-weight: 500;
+  color: #777777;
+}
+tr {
+  width: 100%;
+  display: flex;
+  flex: 1;
+  justify-content: flex-end;
+}
+th:first-child {
+  width: 100%;
+}
+th{
+  width: 30%;
+}
+
+td:first-child {
+  width: 100%;
+}
+td{
+  width: 30%;
+}
+
+table img {
+  width: 80px;
+  height: 80px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
+}
+
+.product-title {
+  margin-left: 1rem;
+  text-align: center;
+}
+
+.product a {
+  color: black;
+  font-size: 1rem;
+  transition-duration: 0.5s;
+}
+.product a:hover {
+  color: #007bff;
+  font-size: 1.05rem;
+  transition-duration: 0.5s;
+  text-decoration: none;
+}
+
+/* .btn-container {
+  display: flex;
+  margin-left: -280px;
+}
+
+.btn-container a {
+  border-radius: 0;
+  background-color: #e8f0f2;
+}
+.btn-container a:hover {
+  background-color: #dde4e6;
+} */

@@ -35,8 +35,9 @@
           <div class="card">
             <div class="card-header" id="headingOne">
               <h2 class="mb-0">
-                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                  Categorias
+                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne"
+                  aria-expanded="true" aria-controls="collapseOne">
+                  Más sobre:
                 </button>
               </h2>
             </div>
@@ -59,14 +60,29 @@
       </div>
 
       <div class="col-lg-3" id="categories-list">
-        <h4 class="my-4">Categorias</h4>
+        <h4 class="my-4">Más sobre:</h4>
         <div class="list-group">
           <?php
+          $categories = array();
             foreach ($product['categories'] as $category) {
+              array_push($categories, $category);
               echo "
                 <a href='#' class='list-group-item'>".utf8_encode($category)."</a>
               ";
             }
+          ?>
+        </div>
+
+        <h4 class="my-4">Productos relacionados:</h4>
+        <div class="list-group">
+
+          <?php
+          $relatedProducts = getRelatedProducts($categories, $product['id']);
+          foreach ($relatedProducts as $key => $value) {
+            echo "
+                <a href='product.php?id=" . $value['id'] . "' class='list-group-item'>". $value['title'] . " $" . $value['price'] ."</a>
+              ";
+          }
           ?>
         </div>
       </div>
@@ -75,8 +91,9 @@
 
         <div class="card mt-4">
           <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-          <div class="carousel-inner">
-            <?php
+            <div class="carousel-inner">
+              <?php
+              $rates = getRate($product['idUser']);
               $class = "carousel-item active";
               foreach ($images as $image) {
                 echo "
@@ -88,16 +105,16 @@
               }
 
             ?>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
           </div>
-          <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-          </a>
-          <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-          </a>
-        </div>
           <div class="card-body">
             <h3 class="card-title"><?php echo $product['title']; ?></h3>
             <h4>$<?php echo $product['price']; ?></h4>
@@ -105,9 +122,42 @@
             <p class="card-text"><?php echo $product['subDescription']; ?></p>
             <hr>
             <div class="footer-product">
+              <a class="btn btn-success" onclick="addProductShoppingCart(<?php echo $_GET['id']; ?>, true)">Comprar</a>
+              <a class="btn btn-success" onclick="addProductShoppingCart(<?php echo $_GET['id']; ?>, false)">Agregar al carrito</a>
+            </div>
+            <hr>
+            <div class="footer-product">
               <p>
-                4.0
-                <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+                <?php
+                  $ratings = array();
+                  foreach ($rates as $key => $value) {
+                      array_push($ratings, $value['rate']);
+                  }
+                  $avgRate = 0;
+                  if ($sum = array_sum($ratings) > 0) {
+                    $avgRate = array_sum($ratings)/count($ratings);
+                  }
+                ?>
+                Reputación del vendedor: <?php
+                  if ($avgRate === 0) {
+                    echo "No tiene calificaciones.";
+                  } else {
+                    echo round($avgRate, 2);
+                  } ?>
+                <span class="text-warning">
+                  <?php
+                    for ($i=0; $i < $avgRate; $i++) {
+                      echo "&#9733;";
+                    }
+                    if ($avgRate < 5) {
+                      $emptyStart = 5 - $avgRate;
+                      for ($i=0; $i < $emptyStart; $i++) {
+                        echo "&#9734;";
+                      }
+                    }
+                    echo "</span>";
+                  ?>
+                </span>
               </p>
               <p>
                 <?php
@@ -123,22 +173,33 @@
 
         <div class="card card-outline-secondary my-4">
           <div class="card-header">
-            Opiniones de los usuarios
+            Opiniones acerca de este vendedor
           </div>
           <div class="card-body">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-            <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
-            <small class="text-muted">Publicado por Anonymous el 3/1/17</small>
-            <hr>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-            <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
-            <small class="text-muted">Publicado por Anonymous el 3/1/17</small>
-            <hr>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-            <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
-            <small class="text-muted">Publicado por Anonymous el 3/1/17</small>
-            <hr>
-            <a href="#" class="btn btn-success">Escribir una opinion</a>
+            <?php
+              if (count($rates) > 0) {
+
+                foreach ($rates as $key => $value) {
+                  echo "<p>" . $value['comment'] . "</p>";
+                  echo "<span class='text-warning'>";
+                  for ($i=0; $i < $value['rate']; $i++) {
+                    echo "&#9733;";
+                  }
+                  if ($value['rate'] < 5) {
+                    $emptyStart = 5 - $value['rate'];
+                    for ($i=0; $i < $emptyStart; $i++) {
+                      echo "&#9734;";
+                    }
+                  }
+                  echo "</span>";
+                  $origDate = $value['date'];
+                  $newDate = date("d F Y G:i", strtotime($origDate));
+                  echo " <small class='text-muted'>Publicado por " . $value['email'] . " el " . $newDate . "</small><hr>";
+                }
+              } else {
+                echo "Este vendedor no tiene opiniones.";
+              }
+            ?>
           </div>
         </div>
 
@@ -147,24 +208,24 @@
             Preguntas
           </div>
           <div class="card-body">
-            <form class="" action="#" method="post">
+            <form class="" action="../controllers/post-comment.php" method="post">
               <div class="mb-3">
-                <textarea class="form-control" placeholder="Escriba su pregunta aquí" required></textarea>
+                <input type="hidden" name="idProduct" value="<?php echo $product['id'] ?>">
+                <textarea class="form-control" placeholder="Escriba su pregunta aquí" name="comment" required></textarea>
               </div>
               <button type="submit" name="button" class="btn btn-success">Realizar pregunta</button>
             </form>
             <hr>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-            <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
-            <small class="text-muted">Publicado por Anonymous el 3/1/17</small>
-            <hr>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-            <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
-            <small class="text-muted">Publicado por Anonymous el 3/1/17</small>
-            <hr>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-            <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
-            <small class="text-muted">Publicado por Anonymous el 3/1/17</small>
+            <?php
+            $comments = getComments($product['id']);
+            foreach ($comments as $key => $value) {
+              $origDate = $value['date'];
+              $newDate = date("d F Y G:i", strtotime($origDate));
+              echo "<p>" . $value['comment'] . "</p>";
+              echo "<small class='text-muted'>Publicado por " . $value['email'] . " el " . $newDate . "</small>";
+              echo "<hr>";
+            }
+            ?>
           </div>
         </div>
 
@@ -180,10 +241,30 @@
   </footer>
 
   <script type="text/javascript">
-      $('.carousel').carousel({
-        interval: false,
-        pause: true
-      })
+    $('.carousel').carousel({
+      interval: false,
+      pause: true
+    })
+  </script>
+
+  <script type="text/javascript">
+    function addProductShoppingCart(idProduct, redirect) {
+        $.ajax({
+            type: 'GET',
+            url: '../controllers/shopping-cart.php',
+            data: {
+                'idProduct': idProduct,
+                'redirect': redirect,
+            },
+            dataType: 'json',
+            success: function (data) {
+              $('#cartBadge').text(data);
+              if (redirect) {
+                window.location.replace("../views/shopping-cart.php");
+              }
+            }
+        });
+    };
   </script>
 
 </body>

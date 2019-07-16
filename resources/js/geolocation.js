@@ -1,6 +1,5 @@
 $(document).ready(function () {
     var x = $("#location");
-    
     function getLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(savePosition, showError);
@@ -11,6 +10,8 @@ $(document).ready(function () {
         var latitud = position.coords.latitude;
         var logitud = position.coords.longitude;
         x.text("Latitud: " + latitud + " Longitud: " + logitud);
+        $("#latitud").val(latitud);
+        $("#longitud").val(logitud);
     }
 
     function showError(error) {

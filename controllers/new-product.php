@@ -26,6 +26,8 @@
   $productData['description'] = isset($_POST['description']) ? $_POST['description'] : '';
   $productData['subDescription'] = isset($_POST['subdescription']) ? $_POST['subdescription'] : '';
   $productData['price'] = isset($_POST['price']) ? $_POST['price'] : 0;
+  $productData['latitud'] = isset($_POST['latitud']) ? $_POST['latitud'] : null;
+  $productData['longitud'] = isset($_POST['longitud']) ? $_POST['longitud'] : null;
   if ($_POST) {
     $subcategoriesPost = isset($_POST['subcategory']) ? $_POST['subcategory']: [];
     $productData['images'] = getPathImage("products");

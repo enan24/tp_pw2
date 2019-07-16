@@ -16,4 +16,7 @@
   }
   $images = searchImagesProduct($_GET['id']);
 
+  if (isset($_SESSION['idUser'])) {
+    saveUsuarioCategories($product['categories']);
+  }
 ?>
