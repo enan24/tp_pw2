@@ -53,7 +53,11 @@ require_once '../controllers/update-product.php';
           </div>
         </div>
         <div class="form-group">
-          Seleccione las imagenes a eliminar:
+          <?php
+            if ($imagesProduct->num_rows > 0) {
+              echo "Seleccione las imagenes a eliminar:";
+            }
+          ?>
           <div class="container" id="images-product" style="display:flex;flex-wrap:wrap;margin:auto;">
             <?php
             foreach ($imagesProduct as $image) {
@@ -103,6 +107,11 @@ require_once '../controllers/update-product.php';
       let images = [];
       let elements = document.getElementById('images-product').getElementsByClassName('custom-control-input').length;
       cantImages -= elements;
+      if (cantImages === 10) {
+        document.getElementById('image').required = true;
+      } else {
+        document.getElementById('image').required = false;
+      }
       document.getElementById('label-image').innerHTML = `Imagen del producto (máximo ${cantImages})`;
       $('#images-product').on('change', function () {
         let elements = document.getElementById('images-product').getElementsByClassName('custom-control-input');
@@ -116,6 +125,11 @@ require_once '../controllers/update-product.php';
               images.splice(index, 1);
             }
             cantImages--;
+          }
+          if (cantImages === 10) {
+            document.getElementById('image').required = true;
+          } else {
+            document.getElementById('image').required = false;
           }
           document.getElementById('label-image').innerHTML = `Imagen del producto (máximo ${cantImages})`;
         }

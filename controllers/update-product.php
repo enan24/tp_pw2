@@ -21,11 +21,10 @@ if (isset($_GET['id']) && !is_null($_GET['id'])) {
     array_push($images, $image);
   }
   if ($_POST) {
-    print_r($_POST);
     if (isset($_POST['images']) && count($_POST['images']) > 0) {
       removeImages($_POST['images']);
     }
-    // removeSubCategories($_GET['id']);
+    removeSubCategories($_GET['id']);
     $product = array();
     $product['id'] = $_GET['id'];
     $product['idUser'] = $_SESSION['idUser'];
@@ -34,8 +33,12 @@ if (isset($_GET['id']) && !is_null($_GET['id'])) {
     $product['description'] = isset($_POST['description']) ? $_POST['description'] : '';
     $product['subDescription'] = isset($_POST['subdescription']) ? $_POST['subdescription'] : '';
     $product['price'] = isset($_POST['price']) ? $_POST['price'] : 0;
-    $product['images'] = getPathImage("products");
+    $product['images'] = [];
+    if (($_FILES['image']['name'][0])) {
+      $product['images'] = getPathImage("products");
+    }
     $product = new Product($product);
+    $product->categories = $_POST['subcategory'];
     $message = $product->validateProduct($_POST['subcategory']);
     if ($message === '') {
       $product->updateProduct($_POST['subcategory']);
