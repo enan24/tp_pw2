@@ -426,7 +426,6 @@ function loadProductsHome() {
   return $products;
 }
 
-
 function saveUsuarioCategories($categories) {
     $idUser = $_SESSION['idUser'];
     foreach ($categories as $id => $nombre) {
@@ -519,4 +518,30 @@ function getVentasPorUsuario($idUser) {
         array_push($usuarios['cantidad'], $row['cantidad']);
     }
     return $usuarios;
+}
+
+function getCategoryProduct($categories, $idProduct) {
+  $keys = array_keys($categories);
+  $sql = "SELECT c.id, c.name FROM subcategory AS s JOIN category AS c ON s.idCategory = c.id WHERE s.id = ".$keys['0']."";
+  if (!$result = $GLOBALS['conexion']->query($sql)) {
+      return die("Ha ocurrido un error al ejecutar la consulta.");
+  }
+  $category = $result->fetch_assoc();
+  return $category;
+}
+
+function removeImages($images) {
+  foreach ($images as $image) {
+    $sql = "DELETE FROM product_image WHERE id = ".$image."";
+    if (!$result = $GLOBALS['conexion']->query($sql)) {
+        return die("Ha ocurrido un error al ejecutar la consulta.");
+    }
+  }
+}
+
+function removeSubCategories($idProduct) {
+  $sql = "DELETE FROM sub_category_product WHERE idProduct = ".$idProduct."";
+  if (!$result = $GLOBALS['conexion']->query($sql)) {
+      return die("Ha ocurrido un error al ejecutar la consulta.");
+  }
 }

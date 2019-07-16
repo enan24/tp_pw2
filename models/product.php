@@ -90,9 +90,29 @@ class Product
         return;
     }
 
-    public function updateProduct()
+    public function updateProduct($subcategories)
     {
-
+      $conexion = $this->conexion->conectar();
+      $price = (int) $this->price;
+      $sql = "UPDATE product SET title = '".$this->title."', description = '".$this->description."', subDescription = '".$this->subDescription."', price = ".$this->price." WHERE id = ".$this->id."";
+      if (!$result = $conexion->query($sql)) {
+          return die("Ha ocurrido un error al ejecutar la consulta");
+      }
+      foreach ($this->images as $image) {
+          $sql = "INSERT INTO product_image (product_id, image) VALUES (".$this->id.", '$image');";
+          if (!$result = $conexion->query($sql)) {
+              return die("Ha ocurrido un error al ejecutar la consulta");
+          }
+      }
+      foreach ($subcategories as $subcategory) {
+          $sql = "INSERT INTO sub_category_product (idSubCategory, idProduct)
+                        VALUES ('$subcategory', ".$this->id.");";
+          if (!$result = $conexion->query($sql)) {
+              return die("Ha ocurrido un error al ejecutar la consulta");
+          }
+      }
+      $message = "Actualizado con exito.";
+      return $message;
     }
 
 }
