@@ -60,7 +60,24 @@ foreach ($products as $product) {
                     </div>
                     <div class='card-footer'>
                       <p class='card-text'>" . $product->subDescription . "</p>
-                      <small class='text-muted'>&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+    ";
+    if ($avgRate === 0) {
+      echo "El vendedor no tiene calificaciones. ";
+    } else {
+      echo "Reputación del vendedor: " . $avgRate. " ";
+    }
+    echo "<span class='text-warning'>";
+    for ($i=0; $i < $avgRate; $i++) {
+      echo "&#9733;";
+    }
+    if ($avgRate < 5) {
+      $emptyStart = 5 - $avgRate;
+      for ($i=0; $i < $emptyStart; $i++) {
+        echo "&#9734;";
+      }
+    }
+    echo "</span>";
+    echo "
                     </div>
                     <div class='card-footer category-product'>";
     foreach ($product->categories as $category) {
@@ -69,7 +86,7 @@ foreach ($products as $product) {
     echo "</div>
                     <div class='card-footer btns'>
                       <div class='container-btns'>
-                        <a class='btn-product-footer' href='new-product.php?update=" . $product->id . "'>Modificar</a>
+                        <a class='btn-product-footer' href='update-product.php?id=" . $product->id . "'>Modificar</a>
                         <a class='btn-product-footer' href='profile.php?remove=" . $product->id . "'>Eliminar</a>
                       </div>
                     </div>
