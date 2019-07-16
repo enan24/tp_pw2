@@ -146,11 +146,11 @@
                   } ?>
                 <span class="text-warning">
                   <?php
-                    for ($i=0; $i < $avgRate; $i++) {
+                    for ($i=0; $i < round($avgRate, 0); $i++) {
                       echo "&#9733;";
                     }
-                    if ($avgRate < 5) {
-                      $emptyStart = 5 - $avgRate;
+                    if (round($avgRate, 0) < 5) {
+                      $emptyStart = 5 - round($avgRate, 0);
                       for ($i=0; $i < $emptyStart; $i++) {
                         echo "&#9734;";
                       }

@@ -71,14 +71,14 @@
                 if ($product['avgRate'] === 0) {
                   echo "El vendedor no tiene calificaciones. ";
                 } else {
-                  echo "Reputación del vendedor: " . $product['avgRate']. " ";
+                  echo "Reputación del vendedor: " . round($product['avgRate'], 2) . " ";
                 }
                 echo "<span class='text-warning'>";
-                for ($i=0; $i < $product['avgRate']; $i++) {
+                for ($i=0; $i < round($product['avgRate'], 0); $i++) {
                   echo "&#9733;";
                 }
-                if ($product['avgRate'] < 5) {
-                  $emptyStart = 5 - $product['avgRate'];
+                if (round($product['avgRate'], 0) < 5) {
+                  $emptyStart = 5 - round($product['avgRate'], 0);
                   for ($i=0; $i < $emptyStart; $i++) {
                     echo "&#9734;";
                   }
