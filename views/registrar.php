@@ -16,7 +16,6 @@ include_once "../resources/templates/css.html";
 include_once "../resources/templates/navbar.php";
 ?>
     <br>
-    <span id="location"></span><br><br>
     <div class="container">
         <div class="row">
             <div class="col-sm-4">
@@ -114,7 +113,6 @@ foreach ($lista_provincias as $key => $value) {
     <?php
 include_once "../resources/templates/javascript.html";
 ?>
-    <script src="../resources/js/geolocation.js"></script>
     <script>
         $('#cuit').tooltip({
             'trigger': 'focus',
