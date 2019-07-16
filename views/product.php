@@ -142,7 +142,7 @@
                   if ($avgRate === 0) {
                     echo "No tiene calificaciones.";
                   } else {
-                    echo $avgRate;
+                    echo round($avgRate, 2);
                   } ?>
                 <span class="text-warning">
                   <?php

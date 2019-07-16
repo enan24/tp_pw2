@@ -1,10 +1,20 @@
 <?php
+session_start();
 require_once "../models/product.php";
 $conexion = new Conexion();
 $conexion = $conexion->conectar();
 $keyword = $conexion->real_escape_string($_GET['keyword']);
 $latitud = isset($_GET['latitud']) ? $_GET['latitud'] : null;
 $longitud = isset($_GET['longitud']) ? $_GET['longitud'] : null;
+
+if (isset($_SESSION['idUser'])) {
+    $idUser = $_SESSION['idUser'];
+    $sql = "INSERT INTO usuario_keyword (usuario_id, keyword)
+        VALUES ($idUser, '$keyword');";
+    if (!$result = $conexion->query($sql)) {
+        return die("Ha ocurrido un error al ejecutar la consulta");
+    }
+}
 
 if ($latitud && $longitud) {
     $latitudMax = $latitud + 0.0001;

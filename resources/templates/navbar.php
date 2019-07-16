@@ -49,6 +49,7 @@
                 <a class="dropdown-item" href="../views/purchases.php">Mis compras</a>';
                 if (isset($_SESSION['admin']) && $_SESSION['admin'] == 1) {
                   echo '<a class="dropdown-item" href="../views/liquidaciones.php">Liquidaciones</a>';
+                  echo '<a class="dropdown-item" href="../views/estadisticas.php">Estadísticas</a>';
               }
                 echo '<div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="../controllers/logout.php">Cerrar sesion</a>

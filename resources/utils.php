@@ -381,7 +381,7 @@ function getImageProfile() {
 }
 
 function searchAllUsers() {
-  $sql = "SELECT u.id AS userid, u.bloqueado, i.nombre, i.apellido FROM usuario AS u JOIN mas_info_usuario AS i ON u.id = i.usuario";
+  $sql = "SELECT u.id AS userid, u.bloqueado, i.nombre, i.apellido, u.email FROM usuario AS u JOIN mas_info_usuario AS i ON u.id = i.usuario";
   if (!$result = $GLOBALS['conexion']->query($sql)) {
       return die("Ha ocurrido un error al ejecutar la consulta");
   }
@@ -424,4 +424,99 @@ function loadProductsHome() {
       array_push($products, $product);
   }
   return $products;
+}
+
+
+function saveUsuarioCategories($categories) {
+    $idUser = $_SESSION['idUser'];
+    foreach ($categories as $id => $nombre) {
+        $sql = "INSERT INTO usuario_categories (usuario_id, category)
+                VALUES ($idUser, $id);";
+        if (!$result = $GLOBALS['conexion']->query($sql)) {
+            return die("Ha ocurrido un error al ejecutar la consulta");
+        }
+    }
+  }
+
+function getBusquedasPorCategoria($idUser) {
+    $categories = array();
+    $categories['names'] = array();
+    $categories['cantidad'] = array();
+    $filter = ($idUser) ? "WHERE uc.usuario_id = $idUser" : "";
+    $sql = "SELECT COUNT(*) AS 'cantidad', sc.name
+            FROM usuario_categories AS uc
+            INNER JOIN subcategory AS sc ON uc.category = sc.id
+            $filter
+            GROUP BY sc.id
+            ORDER BY cantidad DESC;";
+    if (!$result = $GLOBALS['conexion']->query($sql)) {
+        return die("Ha ocurrido un error al ejecutar la consulta");
+    }
+    while ($row = $result->fetch_assoc()) {
+        array_push($categories['names'], $row['name']);
+        array_push($categories['cantidad'], $row['cantidad']);
+    }
+    return $categories;
+}
+
+function getBusquedasRealizadas($idUser) {
+    $keywords = array();
+    $keywords['keyword'] = array();
+    $keywords['cantidad'] = array();
+    $filter = ($idUser) ? "WHERE usuario_id = $idUser" : "";
+    $sql = "SELECT COUNT(*) AS 'cantidad', keyword
+            FROM usuario_keyword
+            $filter
+            GROUP BY keyword
+            ORDER BY cantidad DESC;";
+    if (!$result = $GLOBALS['conexion']->query($sql)) {
+        return die("Ha ocurrido un error al ejecutar la consulta");
+    }
+    while ($row = $result->fetch_assoc()) {
+        array_push($keywords['keyword'], $row['keyword']);
+        array_push($keywords['cantidad'], $row['cantidad']);
+    }
+    return $keywords;
+}
+
+function getMontosPorDia($idUser) {
+    $montos = array();
+    $montos['fecha'] = array();
+    $montos['monto'] = array();
+    $filter = ($idUser) ? "WHERE idUser = $idUser" : "";
+    $sql = "SELECT DATE(date_sale) AS 'fecha', SUM(amount) AS 'monto'
+            FROM sale
+            $filter
+            GROUP BY fecha
+            ORDER BY fecha DESC;";
+    if (!$result = $GLOBALS['conexion']->query($sql)) {
+        return die("Ha ocurrido un error al ejecutar la consulta");
+    }
+    while ($row = $result->fetch_assoc()) {
+        array_push($montos['fecha'], $row['fecha']);
+        array_push($montos['monto'], $row['monto']);
+    }
+    return $montos;
+}
+
+function getVentasPorUsuario($idUser) {
+    $usuarios = array();
+    $usuarios['email'] = array();
+    $usuarios['cantidad'] = array();
+    $filter = ($idUser) ? "WHERE p.idUser = $idUser" : "";
+    $sql = "SELECT COUNT(*) AS 'cantidad', u.email AS 'email'
+            FROM products_sale AS ps
+            INNER JOIN product AS p ON ps.idProduct = p.id
+            INNER JOIN usuario AS u ON p.idUser = u.id
+            $filter
+            GROUP BY p.idUser
+            ORDER BY cantidad DESC;";
+    if (!$result = $GLOBALS['conexion']->query($sql)) {
+        return die("Ha ocurrido un error al ejecutar la consulta");
+    }
+    while ($row = $result->fetch_assoc()) {
+        array_push($usuarios['email'], $row['email']);
+        array_push($usuarios['cantidad'], $row['cantidad']);
+    }
+    return $usuarios;
 }

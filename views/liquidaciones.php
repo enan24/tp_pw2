@@ -5,7 +5,7 @@
     <link rel="icon" href="../resources/img/favico.jpg">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Calificar usuario</title>
+    <title>Liquidaciones</title>
     <?php
 require_once "../resources/utils.php";
 include_once "../resources/templates/css.html";
